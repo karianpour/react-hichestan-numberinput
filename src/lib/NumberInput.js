@@ -9,14 +9,16 @@ class NumberInput extends Component {
     super(props);
     this.inputRef = React.createRef();
 
-    this.readValuesFromProps(props);
+    this.rr = 0;
+
+    this.values = this.readValuesFromProps(props);
   }
 
   readValuesFromProps = (props) => {
     const value = props.value || '';
     const valueToShow = this.mapValue(value, props.numberFormat);
 
-    this.values = {
+    return {
       value,
       valueToShow,
       selectionStart: undefined,
@@ -161,14 +163,15 @@ class NumberInput extends Component {
   };
 
   shouldComponentUpdate(nextProps, nextState){
-    // if(nextProps.value !== this.values.value || nextProps.numberFormat !== this.props.numberFormat){
-    //   this.readValuesFromProps(nextProps);
-    //   return true;
-    // }
+    if(nextProps.value !== this.values.value || nextProps.numberFormat !== this.props.numberFormat){
+      this.updateState(this.readValuesFromProps(nextProps));
+    }
     return false;
   }
 
   render() {
+
+    this.rr += 1;
     // console.log('rendered')
 
     const {value, onChange, onInput, onPast, onKeyDown, pattern, inputMode, type, ref, numberFormat, ...rest} = this.props;
@@ -180,7 +183,7 @@ class NumberInput extends Component {
         type={"text"}
         inputMode={"numeric"}
         pattern={"[0-9]*"}
-        value={valueToShow}
+        defaultValue={valueToShow}
         onKeyDown={this.handleKeyDown}
         onPaste={this.handlePaste}
         onChange={this.handleChange}
