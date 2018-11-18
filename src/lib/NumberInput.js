@@ -5,29 +5,24 @@ export const NUMBER_FORMAT_LATIN = 'LATIN';
 
 class NumberInput extends Component {
 
-
   constructor(props) {
     super(props);
     this.inputRef = React.createRef();
 
-    const value = props.value || '';
-    const numberFormat = props.numberFormat || NUMBER_FORMAT_FARSI;
-    const valueToShow = this.mapValue(value, numberFormat);
+    this.readValuesFromProps(props);
+  }
 
-    this.state = {
+  readValuesFromProps = (props) => {
+    const value = props.value || '';
+    const valueToShow = this.mapValue(value, props.numberFormat);
+
+    this.values = {
       value,
       valueToShow,
-      numberFormat,
       selectionStart: undefined,
       selectionEnd: undefined,
     };
-  }
-
-  componentDidUpdate() {
-    // console.log('updated');
-    if(this.state.selectionStart || this.state.selectionStart===0)
-      this.inputRef.current.setSelectionRange(this.state.selectionStart, this.state.selectionEnd);
-  }
+  };
 
   handleKeyDown = (event) => {
     // console.log('keyCode: ', event.keyCode, 'key: ', event.key);
@@ -40,11 +35,14 @@ class NumberInput extends Component {
     }else if(event.keyCode>=48 && event.keyCode<=57){ //digits
       event.preventDefault();
       // console.log('digit');
-      this.updateState(this.updateValue(event.target, (event.keyCode - 48).toString(), this.state.numberFormat));
+      this.updateState(this.updateValue(event.target, (event.keyCode - 48).toString(), this.props.numberFormat));
     }else if(event.keyCode>=36 && event.keyCode<=40){ //arrows
+    }else if(event.keyCode===9){ //tab
+    }else if(event.ctrlKey && (event.keyCode===67 || event.keyCode===86)){ //copy/paste
     }else if(event.keyCode===229){ //android bug workaround
     }else{
       // console.log('other');
+      // console.log('keyCode: ', event.keyCode, 'key: ', event.key, 'ctrlKey: ', event.ctrlKey);
       event.preventDefault();
     }
   };
@@ -54,15 +52,15 @@ class NumberInput extends Component {
 
     const enteredValue = stripAnyThingButDigits((event.clipboardData || window.clipboardData).getData('text'));
 
-    this.updateState(this.updateValue(event.target, enteredValue), this.state.numberFormat);
+    this.updateState(this.updateValue(event.target, enteredValue, this.props.numberFormat));
   };
 
   handleInput = (event) => {
-    if(this.state.valueToShow===event.target.value) return;
+    if(this.values.valueToShow===event.target.value) return;
 
     const enteredValue = stripAnyThingButDigits(event.target.value);
 
-    this.updateState(this.recheckValue(event.target, enteredValue, this.state.numberFormat));
+    this.updateState(this.recheckValue(event.target, enteredValue, this.props.numberFormat));
   };
 
   mapValue = (value, numberFormat) => {
@@ -78,10 +76,10 @@ class NumberInput extends Component {
   updateState = (newState) => {
     if(!newState) return;
 
-    this.setState(newState, ()=>{
-      this.fireOnChange();
-    });
-
+    this.values = newState;
+    this.inputRef.current.value = this.values.valueToShow;
+    this.inputRef.current.setSelectionRange(this.values.selectionStart, this.values.selectionEnd);
+    this.fireOnChange();
   };
 
   updateValue = (element, enteredValue, numberFormat) => {
@@ -154,7 +152,7 @@ class NumberInput extends Component {
 
   fireOnChange = () => {
     if(this.props.onChange){
-      this.props.onChange({target: {name: this.props.name, value: this.state.value}});
+      this.props.onChange({target: {name: this.props.name, value: this.values.value}});
     }
   };
 
@@ -162,10 +160,19 @@ class NumberInput extends Component {
     //we do not use the onChange, we use the keyPress and paste instead
   };
 
+  shouldComponentUpdate(nextProps, nextState){
+    if(nextProps.value !== this.values.value || nextProps.numberFormat !== this.props.numberFormat){
+      this.readValuesFromProps(nextProps);
+      return true;
+    }
+    return false;
+  }
+
   render() {
+    // console.log('rendered')
 
     const {value, onChange, onInput, onPast, onKeyDown, pattern, inputMode, type, ref, numberFormat, ...rest} = this.props;
-    const {valueToShow} = this.state;
+    const {valueToShow} = this.values;
 
     return (
       <input
