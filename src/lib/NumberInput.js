@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import "./NumberInput.css";
 
 export const NUMBER_FORMAT_FARSI = 'FARSI';
 export const NUMBER_FORMAT_LATIN = 'LATIN';
