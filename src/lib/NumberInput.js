@@ -161,10 +161,10 @@ class NumberInput extends Component {
   };
 
   shouldComponentUpdate(nextProps, nextState){
-    if(nextProps.value !== this.values.value || nextProps.numberFormat !== this.props.numberFormat){
-      this.readValuesFromProps(nextProps);
-      return true;
-    }
+    // if(nextProps.value !== this.values.value || nextProps.numberFormat !== this.props.numberFormat){
+    //   this.readValuesFromProps(nextProps);
+    //   return true;
+    // }
     return false;
   }
 
