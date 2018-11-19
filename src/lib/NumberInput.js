@@ -80,7 +80,12 @@ class NumberInput extends Component {
 
     this.values = newState;
     this.inputRef.current.value = this.values.valueToShow;
-    this.inputRef.current.setSelectionRange(this.values.selectionStart, this.values.selectionEnd);
+    if(this.inputRef.current===document.activeElement){
+      console.log('has focus :D');
+      this.inputRef.current.setSelectionRange(this.values.selectionStart, this.values.selectionEnd);
+    }else{
+      console.log('has not focus :(');
+    }
     this.fireOnChange();
   };
 
@@ -158,10 +163,6 @@ class NumberInput extends Component {
     }
   };
 
-  handleChange = () => {
-    //we do not use the onChange, we use the keyPress and paste instead
-  };
-
   shouldComponentUpdate(nextProps, nextState){
     if(nextProps.value !== this.values.value || nextProps.numberFormat !== this.props.numberFormat){
       this.updateState(this.readValuesFromProps(nextProps));
@@ -186,7 +187,6 @@ class NumberInput extends Component {
         defaultValue={valueToShow}
         onKeyDown={this.handleKeyDown}
         onPaste={this.handlePaste}
-        onChange={this.handleChange}
         onInput={this.handleInput}
         {...rest}
       />
