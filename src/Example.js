@@ -32,7 +32,7 @@ class Example extends Component {
     return (
       <React.Fragment>
         <div>
-          <br/>ورژن ۱
+          <br/>ورژن ۱ ساخت ۲
           <br/>
           <br/>
           <label>خروجی عدد لاتین

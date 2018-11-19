@@ -8,8 +8,7 @@ class NumberInput extends Component {
   constructor(props) {
     super(props);
     this.inputRef = React.createRef();
-
-    this.rr = 0;
+    // this.rr = React.createRef();
 
     this.values = this.readValuesFromProps(props);
   }
@@ -38,13 +37,18 @@ class NumberInput extends Component {
       event.preventDefault();
       // console.log('digit');
       this.updateState(this.updateValue(event.target, (event.keyCode - 48).toString(), this.props.numberFormat));
+    }else if(event.key>='۰' && event.key<='۹'){ //digits
+      event.preventDefault();
+      // console.log('digit');
+      this.updateState(this.updateValue(event.target, event.key, this.props.numberFormat));
     }else if(event.keyCode>=36 && event.keyCode<=40){ //arrows
     }else if(event.keyCode===9){ //tab
-    }else if(event.ctrlKey && (event.keyCode===67 || event.keyCode===86)){ //copy/paste
+    }else if((event.ctrlKey || event.metaKey) && (event.keyCode===67 || event.keyCode===86)){ //copy/paste
     }else if(event.keyCode===229){ //android bug workaround
     }else{
       // console.log('other');
       // console.log('keyCode: ', event.keyCode, 'key: ', event.key, 'ctrlKey: ', event.ctrlKey);
+      // this.rr.current.innerText = `keyCode: ${event.keyCode} key:  ${event.key} ctrlKey: ${event.ctrlKey}`;
       event.preventDefault();
     }
   };
@@ -172,7 +176,6 @@ class NumberInput extends Component {
 
   render() {
 
-    this.rr += 1;
     // console.log('rendered')
 
     const {value, onChange, onInput, onPast, onKeyDown, pattern, inputMode, type, ref, numberFormat, ...rest} = this.props;
@@ -191,6 +194,8 @@ class NumberInput extends Component {
         {...rest}
       />
       );
+    //<p ref={this.rr} type={"text"}>empty</p></div>
+
   }
 }
 export default NumberInput;
