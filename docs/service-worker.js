@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/react-hichestan-numberinput/precache-manifest.9db6091e2899da69d194e5c6238084e9.js"
+  "/react-hichestan-numberinput/precache-manifest.a59b14bf3bf1007b87c97b2b386a1a27.js"
 );
 
 workbox.clientsClaim();
