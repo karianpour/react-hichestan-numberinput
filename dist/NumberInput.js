@@ -9,6 +9,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 import React, { Component } from 'react';
+import shallowEqualObjects from 'shallow-equal/objects';
 
 export var NUMBER_FORMAT_FARSI = 'FARSI';
 export var NUMBER_FORMAT_LATIN = 'LATIN';
@@ -36,14 +37,17 @@ var NumberInput = function (_Component) {
       if (nextProps.value !== this.values.value || nextProps.numberFormat !== this.props.numberFormat) {
         this.updateState(this.readValuesFromProps(nextProps));
       }
+      if (!shallowEqualObjects(nextProps.style, this.props.style)) {
+        return true;
+      }
+      if (nextProps.className !== this.props.className) {
+        this.inputRef.current.className = nextProps.className;
+      }
       return false;
     }
   }, {
     key: 'render',
     value: function render() {
-
-      // console.log('rendered')
-
       var _props = this.props,
           value = _props.value,
           onChange = _props.onChange,
@@ -64,6 +68,7 @@ var NumberInput = function (_Component) {
         ref: this.inputRef,
         type: "text",
         inputMode: "numeric",
+        dir: "ltr",
         pattern: "[0-9]*",
         defaultValue: valueToShow,
         onKeyDown: this.handleKeyDown,
@@ -155,10 +160,10 @@ var _initialiseProps = function _initialiseProps() {
     _this2.values = newState;
     _this2.inputRef.current.value = _this2.values.valueToShow;
     if (_this2.inputRef.current === document.activeElement) {
-      console.log('has focus :D');
+      // console.log('has focus :D');
       _this2.inputRef.current.setSelectionRange(_this2.values.selectionStart, _this2.values.selectionEnd);
     } else {
-      console.log('has not focus :(');
+      // console.log('has not focus :(');
     }
     _this2.fireOnChange();
   };

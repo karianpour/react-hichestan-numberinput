@@ -1,11 +1,6 @@
 {
-  "main.js": "/react-hichestan-numberinput/static/js/main.35357b9c.chunk.js",
-  "main.js.map": "/react-hichestan-numberinput/static/js/main.35357b9c.chunk.js.map",
-  "static/js/1.af3339f7.chunk.js": "/react-hichestan-numberinput/static/js/1.af3339f7.chunk.js",
-  "static/js/1.af3339f7.chunk.js.map": "/react-hichestan-numberinput/static/js/1.af3339f7.chunk.js.map",
-  "runtime~main.js": "/react-hichestan-numberinput/static/js/runtime~main.4252cb7d.js",
-  "runtime~main.js.map": "/react-hichestan-numberinput/static/js/runtime~main.4252cb7d.js.map",
-  "index.html": "/react-hichestan-numberinput/index.html",
-  "precache-manifest.a59b14bf3bf1007b87c97b2b386a1a27.js": "/react-hichestan-numberinput/precache-manifest.a59b14bf3bf1007b87c97b2b386a1a27.js",
-  "service-worker.js": "/react-hichestan-numberinput/service-worker.js"
+  "main.css": "static/css/main.6eda1f84.css",
+  "main.css.map": "static/css/main.6eda1f84.css.map",
+  "main.js": "static/js/main.068ab935.js",
+  "main.js.map": "static/js/main.068ab935.js.map"
 }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import shallowEqualObjects from 'shallow-equal/objects';
 
 export const NUMBER_FORMAT_FARSI = 'FARSI';
 export const NUMBER_FORMAT_LATIN = 'LATIN';
@@ -85,10 +86,10 @@ class NumberInput extends Component {
     this.values = newState;
     this.inputRef.current.value = this.values.valueToShow;
     if(this.inputRef.current===document.activeElement){
-      console.log('has focus :D');
+      // console.log('has focus :D');
       this.inputRef.current.setSelectionRange(this.values.selectionStart, this.values.selectionEnd);
     }else{
-      console.log('has not focus :(');
+      // console.log('has not focus :(');
     }
     this.fireOnChange();
   };
@@ -171,13 +172,16 @@ class NumberInput extends Component {
     if(nextProps.value !== this.values.value || nextProps.numberFormat !== this.props.numberFormat){
       this.updateState(this.readValuesFromProps(nextProps));
     }
+    if(!shallowEqualObjects(nextProps.style, this.props.style)){
+      return true;
+    }
+    if(nextProps.className !== this.props.className){
+      this.inputRef.current.className = nextProps.className;
+    }
     return false;
   }
 
   render() {
-
-    // console.log('rendered')
-
     const {value, onChange, onInput, onPast, onKeyDown, pattern, inputMode, type, ref, numberFormat, ...rest} = this.props;
     const {valueToShow} = this.values;
 
@@ -186,6 +190,7 @@ class NumberInput extends Component {
         ref={this.inputRef}
         type={"text"}
         inputMode={"numeric"}
+        dir={"ltr"}
         pattern={"[0-9]*"}
         defaultValue={valueToShow}
         onKeyDown={this.handleKeyDown}
