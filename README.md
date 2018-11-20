@@ -3,6 +3,7 @@
 A persian number input.
 
 The component is compatible with react 16.
+The component is controlled, so the component code is imperative. We need that to manipulate the input data entry behavior.
 
 
 ## Demo
@@ -14,7 +15,8 @@ Here you can experience a live [demo](https://karianpour.github.io/react-hichest
 - The value is latin digit (suitable for backend data storage)
 - Number keypad on mobile devices (Samsung browser is not supported)
 - Accept non digit value, it is not a bug, it is a feature, if the value sent from the back end has non digit data we have to show it to avid miss-understanding
-- Forward any style (or any other attributes) given to the component to the inner input element. 
+- Forward any style (or any other attributes) given to the component to the inner input element.
+- Forward the style and className changes after the first render to the inner input element.
 
 ## Installation
 
