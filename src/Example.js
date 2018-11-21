@@ -9,6 +9,7 @@ class Example extends Component {
     Number2: '123',
     color: false,
     bgColor: false,
+    Tel1: '0912',
   };
 
   componentDidMount(){
@@ -60,7 +61,7 @@ class Example extends Component {
     return (
       <React.Fragment>
         <div>
-          <br/>ورژن ۱ ساخت ۳
+          <br/>ورژن ۱ ساخت ۴
           <br/>
           <br/>
           <label>خروجی عدد لاتین
@@ -89,6 +90,14 @@ class Example extends Component {
           <br/>
           <input type="text" name="Number2_value" style={{width: 250}} value={this.state.Number2} onChange={this.handleValueChange} placeholder="این فیلد خروجی است" />
         </label>
+        <br/>
+        <div>
+          <label>
+            نمونه تلفن فارسی
+            <br/>
+            <NumberInput type="tel" name="Tel1" className={className} style={style} value={this.state.Tel1} onChange={this.handleChange} placeholder="type/paste a number" />
+          </label>
+        </div>
         <br/>
         <br/>
         <button onClick={this.toggleColor}>toggle className</button>

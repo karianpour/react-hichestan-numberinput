@@ -8,7 +8,7 @@ class NumberInput extends Component {
 
   constructor(props) {
     super(props);
-    this.inputRef = React.createRef();
+    this.inputRef = props.ref ? props.ref : React.createRef();
     // this.rr = React.createRef();
 
     this.values = this.readValuesFromProps(props);
@@ -185,13 +185,17 @@ class NumberInput extends Component {
     const {value, onChange, onInput, onPast, onKeyDown, pattern, inputMode, type, ref, numberFormat, ...rest} = this.props;
     const {valueToShow} = this.values;
 
+    const localInputMode = this.props.type === 'tel' ? 'tel' : 'numeric';
+    const localPattern = '[0-9]*';
+
     return (
       <input
         ref={this.inputRef}
         type={"text"}
-        inputMode={"numeric"}
+        inputMode={localInputMode}
+        // xInputMode={localnputMode} // in firefox OS it is x-inputmode, I do not know how to handle it
         dir={"ltr"}
-        pattern={"[0-9]*"}
+        pattern={localPattern}
         defaultValue={valueToShow}
         onKeyDown={this.handleKeyDown}
         onPaste={this.handlePaste}

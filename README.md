@@ -18,6 +18,7 @@ Here you can experience a live [demo](https://karianpour.github.io/react-hichest
 - Accept non digit value, it is not a bug, it is a feature, if the value sent from the back end has non digit data we have to show it to avid miss-understanding
 - Forward any style (or any other attributes) given to the component to the inner input element.
 - Forward the style and className changes after the first render to the inner input element.
+- Showing tel keypad if type='tel'
 
 ## Installation
 
