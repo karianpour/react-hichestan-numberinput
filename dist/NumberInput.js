@@ -24,7 +24,7 @@ var NumberInput = function (_Component) {
 
     _initialiseProps.call(_this);
 
-    _this.inputRef = React.createRef();
+    _this.inputRef = props.ref ? props.ref : React.createRef();
     // this.rr = React.createRef();
 
     _this.values = _this.readValuesFromProps(props);
@@ -63,14 +63,17 @@ var NumberInput = function (_Component) {
 
       var valueToShow = this.values.valueToShow;
 
+      // const localInputMode = this.props.type === 'tel' ? 'tel' : 'numeric'; // as we use type=tel, then we do not need it any more
+      // const localPattern = '[0-9]*'; // it has problem with the form checking, as we insert persian digit, it is not acceptable for the browser
 
       return React.createElement('input', Object.assign({
         ref: this.inputRef,
-        type: "text",
-        inputMode: "numeric",
-        dir: "ltr",
-        pattern: "[0-9]*",
-        defaultValue: valueToShow,
+        type: "tel" // I tried to use text and using inputMode, but it does not work on Safari
+        // inputMode={localInputMode}
+        // xInputMode={localnputMode} // in firefox OS it is x-inputmode, I do not know how to handle it
+        , dir: "ltr"
+        // pattern={localPattern}
+        , defaultValue: valueToShow,
         onKeyDown: this.handleKeyDown,
         onPaste: this.handlePaste,
         onInput: this.handleInput
@@ -112,6 +115,11 @@ var _initialiseProps = function _initialiseProps() {
       event.preventDefault();
       // console.log('digit');
       _this2.updateState(_this2.updateValue(event.target, (event.keyCode - 48).toString(), _this2.props.numberFormat));
+    } else if (event.keyCode >= 96 && event.keyCode <= 105) {
+      //digits
+      event.preventDefault();
+      // console.log('digit');
+      _this2.updateState(_this2.updateValue(event.target, (event.keyCode - 96).toString(), _this2.props.numberFormat));
     } else if (event.key >= '۰' && event.key <= '۹') {
       //digits
       event.preventDefault();

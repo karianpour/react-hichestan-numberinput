@@ -38,6 +38,10 @@ class NumberInput extends Component {
       event.preventDefault();
       // console.log('digit');
       this.updateState(this.updateValue(event.target, (event.keyCode - 48).toString(), this.props.numberFormat));
+    }else if(event.keyCode>=96 && event.keyCode<=105){ //digits
+      event.preventDefault();
+      // console.log('digit');
+      this.updateState(this.updateValue(event.target, (event.keyCode - 96).toString(), this.props.numberFormat));
     }else if(event.key>='۰' && event.key<='۹'){ //digits
       event.preventDefault();
       // console.log('digit');
@@ -185,17 +189,17 @@ class NumberInput extends Component {
     const {value, onChange, onInput, onPast, onKeyDown, pattern, inputMode, type, ref, numberFormat, ...rest} = this.props;
     const {valueToShow} = this.values;
 
-    const localInputMode = this.props.type === 'tel' ? 'tel' : 'numeric';
-    const localPattern = '[0-9]*';
+    // const localInputMode = this.props.type === 'tel' ? 'tel' : 'numeric'; // as we use type=tel, then we do not need it any more
+    // const localPattern = '[0-9]*'; // it has problem with the form checking, as we insert persian digit, it is not acceptable for the browser
 
     return (
       <input
         ref={this.inputRef}
-        type={"text"}
-        inputMode={localInputMode}
+        type={"tel"} // I tried to use text and using inputMode, but it does not work on Safari
+        // inputMode={localInputMode}
         // xInputMode={localnputMode} // in firefox OS it is x-inputmode, I do not know how to handle it
         dir={"ltr"}
-        pattern={localPattern}
+        // pattern={localPattern}
         defaultValue={valueToShow}
         onKeyDown={this.handleKeyDown}
         onPaste={this.handlePaste}
