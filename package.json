@@ -1,6 +1,21 @@
 {
   "name": "react-hichestan-numberinput",
-  "version": "0.1.6",
+  "version": "0.1.7",
+  "description": "A serie of react components to numbers in input specially persian numbers.",
+  "author": "Hichestan",
+  "copyright.owner": "Hichestan Corp.",
+  "license": "MIT",
+  "keywords": [
+    "React",
+    "Persian",
+    "NumberField",
+    "NumberInput"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/karianpour/react-hichestan-numberinput"
+  },
+
   "main": "dist/index.js",
   "module": "dist/index.js",
   "files": [

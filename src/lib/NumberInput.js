@@ -49,6 +49,8 @@ class NumberInput extends Component {
     }else if(event.keyCode>=36 && event.keyCode<=40){ //arrows
     }else if(event.keyCode===9){ //tab
     }else if((event.ctrlKey || event.metaKey) && (event.keyCode===67 || event.keyCode===86)){ //copy/paste
+    }else if((event.ctrlKey || event.metaKey) && (event.keyCode===82)){ //refresh key
+    }else if(event.keyCode===116){ // F5 refresh key
     }else if(event.keyCode===229){ //android bug workaround
     }else{
       // console.log('other');
