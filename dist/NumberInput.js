@@ -11,8 +11,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 import React, { Component } from 'react';
 import shallowEqualObjects from 'shallow-equal/objects';
 
-export var NUMBER_FORMAT_FARSI = 'FARSI';
-export var NUMBER_FORMAT_LATIN = 'LATIN';
+import { mapToFarsi, mapToLatin, stripAnyThingButDigits, NUMBER_FORMAT_FARSI, NUMBER_FORMAT_LATIN } from './util';
 
 var NumberInput = function (_Component) {
   _inherits(NumberInput, _Component);
@@ -125,7 +124,7 @@ var _initialiseProps = function _initialiseProps() {
       event.preventDefault();
       // console.log('digit');
       _this2.updateState(_this2.updateValue(event.target, event.key, _this2.props.numberFormat));
-    } else if (event.keyCode >= 36 && event.keyCode <= 40) {//arrows
+    } else if (event.keyCode >= 35 && event.keyCode <= 40) {//arrows
     } else if (event.keyCode === 9) {//tab
     } else if ((event.ctrlKey || event.metaKey) && (event.keyCode === 67 || event.keyCode === 86)) {//copy/paste
     } else if ((event.ctrlKey || event.metaKey) && event.keyCode === 82) {//refresh key
@@ -254,22 +253,3 @@ var _initialiseProps = function _initialiseProps() {
 };
 
 export default NumberInput;
-
-export function mapToFarsi(str) {
-  if (!str) return str;
-  return str.toString().replace(/[1234567890]/gi, function (e) {
-    return String.fromCharCode(e.charCodeAt(0) + 1728);
-  });
-}
-
-export function mapToLatin(str) {
-  if (!str) return str;
-  return str.toString().replace(/[۱۲۳۴۵۶۷۸۹۰]/gi, function (e) {
-    return String.fromCharCode(e.charCodeAt(0) - 1728);
-  });
-}
-
-export function stripAnyThingButDigits(str) {
-  if (!str) return str;
-  return str.toString().replace(/[^1234567890۱۲۳۴۵۶۷۸۹۰]/gi, '');
-}

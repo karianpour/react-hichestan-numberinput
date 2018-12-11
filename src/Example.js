@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { NumberInput } from "./lib";
-import {NUMBER_FORMAT_LATIN} from './lib/NumberInput';
+import { NumberInput, CardNumberInput } from "./lib";
+import {NUMBER_FORMAT_LATIN} from './lib';
 import './Example.css';
 
 class Example extends Component {
@@ -10,6 +10,7 @@ class Example extends Component {
     color: false,
     bgColor: false,
     Tel1: '0912',
+    value1: '',
   };
 
   componentDidMount(){
@@ -61,7 +62,6 @@ class Example extends Component {
     return (
       <React.Fragment>
         <div>
-          <br/>ورژن ۱ ساخت ۶
           <br/>
           <br/>
           <label>خروجی عدد لاتین
@@ -99,6 +99,21 @@ class Example extends Component {
           </label>
         </div>
         <br/>
+        <label>ورودی شماره کارت
+            <br/>
+            <CardNumberInput
+              value={this.state.value1}
+              name={'value1'}
+              className={className} 
+              style={style} 
+              onChange={this.handleChange}
+              placeholder="شماره کارت" />
+            <br/>
+            خروجی
+            <br/>
+            <input type="text" name="value1" dir={'ltr'} value={this.state.value1} onChange={this.handleChange}/>
+          </label>
+          <br/>
         <br/>
         <button onClick={this.toggleColor}>toggle className</button>
         <button onClick={this.toggleBgColor}>toggle style</button>

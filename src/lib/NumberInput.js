@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import shallowEqualObjects from 'shallow-equal/objects';
 
-export const NUMBER_FORMAT_FARSI = 'FARSI';
-export const NUMBER_FORMAT_LATIN = 'LATIN';
+import { mapToFarsi, mapToLatin, stripAnyThingButDigits, NUMBER_FORMAT_FARSI, NUMBER_FORMAT_LATIN} from './util';
 
 class NumberInput extends Component {
 
@@ -46,7 +45,7 @@ class NumberInput extends Component {
       event.preventDefault();
       // console.log('digit');
       this.updateState(this.updateValue(event.target, event.key, this.props.numberFormat));
-    }else if(event.keyCode>=36 && event.keyCode<=40){ //arrows
+    }else if(event.keyCode>=35 && event.keyCode<=40){ //arrows
     }else if(event.keyCode===9){ //tab
     }else if((event.ctrlKey || event.metaKey) && (event.keyCode===67 || event.keyCode===86)){ //copy/paste
     }else if((event.ctrlKey || event.metaKey) && (event.keyCode===82)){ //refresh key
@@ -214,19 +213,3 @@ class NumberInput extends Component {
   }
 }
 export default NumberInput;
-
-
-export function mapToFarsi(str) {
-  if(!str) return str;
-  return str.toString().replace(/[1234567890]/gi, e => String.fromCharCode(e.charCodeAt(0) + 1728))
-}
-
-export function mapToLatin(str) {
-  if(!str) return str;
-  return str.toString().replace(/[۱۲۳۴۵۶۷۸۹۰]/gi, e => String.fromCharCode(e.charCodeAt(0) - 1728))
-}
-
-export function stripAnyThingButDigits(str) {
-  if(!str) return str;
-  return str.toString().replace(/[^1234567890۱۲۳۴۵۶۷۸۹۰]/gi, '');
-}
