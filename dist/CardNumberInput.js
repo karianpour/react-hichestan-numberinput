@@ -1,66 +1,69 @@
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
+import _objectWithoutProperties from "/home/kayvan/projects/react-hichestan-numberinput/node_modules/@babel/runtime/helpers/esm/objectWithoutProperties";
+import _objectSpread from "/home/kayvan/projects/react-hichestan-numberinput/node_modules/@babel/runtime/helpers/esm/objectSpread";
+import _classCallCheck from "/home/kayvan/projects/react-hichestan-numberinput/node_modules/@babel/runtime/helpers/esm/classCallCheck";
+import _createClass from "/home/kayvan/projects/react-hichestan-numberinput/node_modules/@babel/runtime/helpers/esm/createClass";
+import _possibleConstructorReturn from "/home/kayvan/projects/react-hichestan-numberinput/node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn";
+import _getPrototypeOf from "/home/kayvan/projects/react-hichestan-numberinput/node_modules/@babel/runtime/helpers/esm/getPrototypeOf";
+import _inherits from "/home/kayvan/projects/react-hichestan-numberinput/node_modules/@babel/runtime/helpers/esm/inherits";
+import _assertThisInitialized from "/home/kayvan/projects/react-hichestan-numberinput/node_modules/@babel/runtime/helpers/esm/assertThisInitialized";
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import shallowEqualObjects from 'shallow-equal/objects';
 import { mapToFarsi, mapToLatin, hasStringACharToGoToNext, NUMBER_FORMAT_FARSI, NUMBER_FORMAT_LATIN } from './util';
-
 var CARD_SEPERATOR = '-';
-var SEPERATORES_REGEX = new RegExp('[ ' + CARD_SEPERATOR + ']', 'g');
-var MATCH_REGEX = new RegExp('[0-9]{4}[' + CARD_SEPERATOR + '][0-9]{4}[' + CARD_SEPERATOR + '][0-9]{4}[' + CARD_SEPERATOR + '][0-9]{4}');
-var EMPTY_VALUE = '    ' + CARD_SEPERATOR + '    ' + CARD_SEPERATOR + '    ' + CARD_SEPERATOR + '    ';
-
+var SEPERATORES_REGEX = new RegExp("[ ".concat(CARD_SEPERATOR, "]"), 'g');
+var MATCH_REGEX = new RegExp("[0-9]{4}[".concat(CARD_SEPERATOR, "][0-9]{4}[").concat(CARD_SEPERATOR, "][0-9]{4}[").concat(CARD_SEPERATOR, "][0-9]{4}"));
+var EMPTY_VALUE = "    ".concat(CARD_SEPERATOR, "    ").concat(CARD_SEPERATOR, "    ").concat(CARD_SEPERATOR, "    ");
 /**
  * @param {string} str
  * @param {number} n
  */
+
 function repeatStr(str, n) {
   var r = '';
+
   for (var i = 0; i < n; i++) {
     r += str;
   }
+
   return r;
 }
 
-var CardNumberInput = function (_Component) {
+var CardNumberInput =
+/*#__PURE__*/
+function (_Component) {
   _inherits(CardNumberInput, _Component);
 
   function CardNumberInput(props) {
+    var _this;
+
     _classCallCheck(this, CardNumberInput);
 
-    var _this = _possibleConstructorReturn(this, (CardNumberInput.__proto__ || Object.getPrototypeOf(CardNumberInput)).call(this, props));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(CardNumberInput).call(this, props));
 
     _this.readCardNumberFromValue = function (value) {
       if (!value) return;
-
       var latinNumberValue = mapToLatin(value);
       var regEx = /[0-9]{4}[^0-9]*[0-9]{4}[^0-9]*[0-9]{4}[^0-9]*[0-9]{4}/;
       var match = latinNumberValue.match(regEx);
+
       if (match) {
         var valueWithNoSeperator = match[0].replace(/[^0-9]*/g, '');
-        return '' + valueWithNoSeperator.substring(0, 4) + CARD_SEPERATOR + valueWithNoSeperator.substring(4, 8) + CARD_SEPERATOR + valueWithNoSeperator.substring(8, 12) + CARD_SEPERATOR + valueWithNoSeperator.substring(12, 16);
+        return "".concat(valueWithNoSeperator.substring(0, 4)).concat(CARD_SEPERATOR).concat(valueWithNoSeperator.substring(4, 8)).concat(CARD_SEPERATOR).concat(valueWithNoSeperator.substring(8, 12)).concat(CARD_SEPERATOR).concat(valueWithNoSeperator.substring(12, 16));
       }
 
       var regEx4Digits = /[0-9]{4}/;
       var match4Digit = latinNumberValue.match(regEx4Digits);
+
       if (match4Digit) {
         _this.updateState(_this.updateValue(_this.inputRef.current, match4Digit[0], _this.props.numberFormat));
+
         return;
       }
     };
 
     _this.readValues = function (value) {
       var valueToShow = _this.mapValue(value, _this.props.numberFormat);
+
       var valueIsValid = _this.isValueValidCardNumber(value);
 
       return {
@@ -76,6 +79,7 @@ var CardNumberInput = function (_Component) {
       if (_this.isValueEmpty(_this.values.value)) {
         _this.jumpTo(1);
       }
+
       if (_this.props.onFocus) {
         _this.props.onFocus(event);
       }
@@ -89,23 +93,29 @@ var CardNumberInput = function (_Component) {
 
     _this.jumpToNext = function () {
       var selectionStart = _this.inputRef.current.selectionStart;
+
       var whereTheCaretIs = _this.whereIsCaret(selectionStart);
 
       if (whereTheCaretIs < 4) {
         _this.jumpTo(whereTheCaretIs + 1);
+
         return true;
       }
+
       return false;
     };
 
     _this.jumpToPrevious = function () {
       var selectionStart = _this.inputRef.current.selectionStart;
+
       var whereTheCaretIs = _this.whereIsCaret(selectionStart);
 
       if (whereTheCaretIs > 1) {
         _this.jumpTo(whereTheCaretIs - 1);
+
         return true;
       }
+
       return false;
     };
 
@@ -118,6 +128,7 @@ var CardNumberInput = function (_Component) {
       var caretPosition = (section - 1) * 5;
       _this.values.selectionStart = caretPosition;
       _this.values.selectionEnd = caretPosition;
+
       _this.inputRef.current.setSelectionRange(_this.values.selectionStart, _this.values.selectionEnd);
     };
 
@@ -126,28 +137,31 @@ var CardNumberInput = function (_Component) {
       if (event.keyCode === 8) {
         //backspace
         event.preventDefault();
+
         _this.updateState(_this.deleteValue(event.target, -1));
       } else if (event.keyCode === 46) {
         //delete
         event.preventDefault();
+
         _this.updateState(_this.deleteValue(event.target, 1));
       } else if (event.keyCode >= 48 && event.keyCode <= 57) {
         //digits
-        event.preventDefault();
-        // console.log('digit');
+        event.preventDefault(); // console.log('digit');
+
         _this.updateState(_this.updateValue(event.target, (event.keyCode - 48).toString(), _this.props.numberFormat));
       } else if (event.keyCode >= 96 && event.keyCode <= 105) {
         //digits
-        event.preventDefault();
-        // console.log('digit');
+        event.preventDefault(); // console.log('digit');
+
         _this.updateState(_this.updateValue(event.target, (event.keyCode - 96).toString(), _this.props.numberFormat));
       } else if (event.key >= '۰' && event.key <= '۹') {
         //digits
-        event.preventDefault();
-        // console.log('digit');
+        event.preventDefault(); // console.log('digit');
+
         _this.updateState(_this.updateValue(event.target, event.key, _this.props.numberFormat));
       } else if (event.key === '.' || event.key === '/' || event.key === '-' || event.key === '*' || event.key === '#' || event.keyCode === 188 || event.keyCode === 189 || event.keyCode === 190 || event.keyCode === 191) {
         event.preventDefault();
+
         if (event.ctrlKey || event.shiftKey || event.metaKey || event.key === '#') {
           _this.jumpToPrevious();
         } else {
@@ -159,6 +173,7 @@ var CardNumberInput = function (_Component) {
         if (Math.abs(_this.inputRef.current.selectionStart - _this.inputRef.current.selectionEnd) === _this.inputRef.current.value.length) {
           return;
         }
+
         if (event.ctrlKey || event.shiftKey || event.metaKey) {
           if (_this.jumpToPrevious()) event.preventDefault();
         } else {
@@ -175,6 +190,7 @@ var CardNumberInput = function (_Component) {
         // F4
         if (_this.props.onShowDialog) {
           event.preventDefault();
+
           _this.props.onShowDialog();
         }
       } else if (event.keyCode >= 112 && event.keyCode <= 123) {// All other F keys
@@ -182,8 +198,7 @@ var CardNumberInput = function (_Component) {
         //android bug workaround
         //K1 : I guess that we have to save the caret position as the input will change it, we need it to know where we have to jump to in handleInput function
         _this.values.selectionStart = _this.inputRef.current.selectionStart;
-        _this.values.selectionEnd = _this.inputRef.current.selectionEnd;
-        //  this.rr.current.innerText = `setting ss to ${this.values.selectionStart}  ${this.values.selectionEnd}`;
+        _this.values.selectionEnd = _this.inputRef.current.selectionEnd; //  this.rr.current.innerText = `setting ss to ${this.values.selectionStart}  ${this.values.selectionEnd}`;
       } else {
         // console.log('other');
         // console.log('keyCode: ', event.keyCode, 'key: ', event.key, 'ctrlKey: ', event.ctrlKey);
@@ -200,6 +215,7 @@ var CardNumberInput = function (_Component) {
       event.preventDefault();
 
       var valueFromClipboard = _this.readCardNumberFromValue((event.clipboardData || window.clipboardData).getData('text'));
+
       if (!valueFromClipboard) return;
 
       var values = _this.readValues(valueFromClipboard);
@@ -212,55 +228,57 @@ var CardNumberInput = function (_Component) {
     _this.handleInput = function (event) {
       event.preventDefault();
       if (_this.values.valueToShow === event.target.value) return;
-      var inputValue = event.target.value;
-      // const enteredValue = stripAnyThingButDigits(event.target.value);
+      var inputValue = event.target.value; // const enteredValue = stripAnyThingButDigits(event.target.value);
       // this.rr.current.innerText = `V : ${inputValue}`;
 
       if (_this.inputRef.current.value !== _this.values.valueToShow) {
         _this.inputRef.current.value = _this.values.valueToShow;
+
         _this.inputRef.current.setSelectionRange(_this.values.selectionStart, _this.values.selectionEnd);
       }
 
       if (hasStringACharToGoToNext(inputValue)) {
         _this.jumpToNext();
-      }
+      } // this.updateState(this.rollbackValue());
 
-      // this.updateState(this.rollbackValue());
     };
 
     _this.mapValue = function (value, numberFormat) {
       if (numberFormat === NUMBER_FORMAT_FARSI) {
         var _mapped = mapToFarsi(value);
+
         return _mapped;
       } else if (numberFormat === NUMBER_FORMAT_LATIN) {
         var _mapped2 = mapToLatin(value);
+
         return _mapped2;
       }
+
       var mapped = mapToFarsi(value);
       return mapped;
     };
 
     _this.updateState = function (newState) {
       if (!newState) return;
-
       _this.values = newState;
 
       if (_this.values.valueIsValid === undefined) {
         _this.values.valueIsValid = _this.isValueValidCardNumber(_this.values.value);
       }
 
-      var fireOnChangeInTheEnd = false;
-      //console.log('values on updateState', this.values)
+      var fireOnChangeInTheEnd = false; //console.log('values on updateState', this.values)
+
       if (_this.inputRef.current.value !== _this.values.valueToShow) {
         fireOnChangeInTheEnd = true;
         _this.inputRef.current.value = _this.values.valueToShow;
       }
+
       if (_this.inputRef.current === document.activeElement) {
         // console.log('has focus :D');
         _this.inputRef.current.setSelectionRange(_this.values.selectionStart, _this.values.selectionEnd);
-      } else {
-        // console.log('has not focus :(');
+      } else {// console.log('has not focus :(');
       }
+
       if (fireOnChangeInTheEnd) {
         _this.fireOnChange();
       }
@@ -268,19 +286,21 @@ var CardNumberInput = function (_Component) {
 
     _this.updateValue = function (element, enteredValue, numberFormat) {
       var enteredValueMapped = _this.mapValue(enteredValue, numberFormat);
+
       var valueToShow = element.value;
+
       if (valueToShow === '') {
         valueToShow = EMPTY_VALUE;
       }
+
       var selectionStart = element.selectionStart;
       var selectionEnd = element.selectionEnd;
-
       valueToShow = valueToShow.substring(0, selectionStart) + enteredValueMapped + valueToShow.substring(selectionEnd);
       selectionStart += enteredValueMapped.length;
-
       var seperatorBefore = valueToShow.lastIndexOf(CARD_SEPERATOR, selectionStart - 1) + 1;
       var seperatorAfter = valueToShow.indexOf(CARD_SEPERATOR, selectionStart);
       if (seperatorAfter === -1) seperatorAfter = valueToShow.length;
+
       if (seperatorAfter - seperatorBefore > 4) {
         if (selectionStart - seperatorBefore >= 4) {
           valueToShow = valueToShow.substring(0, seperatorBefore) + valueToShow.substring(selectionStart - 4, selectionStart) + valueToShow.substring(seperatorAfter);
@@ -291,13 +311,14 @@ var CardNumberInput = function (_Component) {
       }
 
       var value = mapToLatin(valueToShow);
+
       var valueIsValid = _this.isValueValidCardNumber(value);
 
       if (selectionStart < valueToShow.length && value.substring(selectionStart - 4, selectionStart).match(/[0-9]{4}/)) {
         selectionStart++;
       }
-      selectionEnd = selectionStart;
 
+      selectionEnd = selectionStart;
       var values = {
         value: value,
         valueToShow: valueToShow,
@@ -305,7 +326,6 @@ var CardNumberInput = function (_Component) {
         selectionStart: selectionStart,
         selectionEnd: selectionEnd
       };
-
       return values;
     };
 
@@ -338,12 +358,15 @@ var CardNumberInput = function (_Component) {
       if (selectionStart === selectionEnd) {
         if (qty < 0) {
           if (selectionStart === 0) return;
+
           if (valueToShow.substring(selectionStart + qty, selectionStart) === CARD_SEPERATOR) {
-            var newValues = Object.assign({}, _this.values);
+            var newValues = _objectSpread({}, _this.values);
+
             newValues.selectionStart--;
             newValues.selectionEnd--;
             return newValues;
           }
+
           valueToShow = valueToShow.substring(0, selectionStart + qty) + valueToShow.substring(selectionEnd);
           selectionStart += qty;
         } else {
@@ -351,7 +374,9 @@ var CardNumberInput = function (_Component) {
           if (valueToShow.substring(selectionStart, selectionStart + qty) === CARD_SEPERATOR) return;
           valueToShow = valueToShow.substring(0, selectionStart) + valueToShow.substring(selectionEnd + qty);
         }
+
         var nextSeperator = valueToShow.indexOf(CARD_SEPERATOR, selectionStart);
+
         if (nextSeperator === -1) {
           valueToShow = valueToShow + ' ';
         } else {
@@ -367,8 +392,8 @@ var CardNumberInput = function (_Component) {
       }
 
       selectionEnd = selectionStart;
-
       var value = mapToLatin(valueToShow);
+
       var valueIsValid = _this.isValueValidCardNumber(value);
 
       var values = {
@@ -378,13 +403,13 @@ var CardNumberInput = function (_Component) {
         selectionStart: selectionStart,
         selectionEnd: selectionEnd
       };
-
       return values;
     };
 
     _this.fireOnChange = function () {
       if (_this.props.onChange) {
         var value = _this.values.value;
+
         if (_this.previousValue !== value) {
           _this.previousValue = value;
           var target = {
@@ -392,159 +417,97 @@ var CardNumberInput = function (_Component) {
             value: _this.values.value,
             valueIsValid: _this.values.valueIsValid
           };
-          _this.props.onChange({ target: target });
+
+          _this.props.onChange({
+            target: target
+          });
         }
       }
     };
 
-    _this.emptyValue = _this.emptyValue.bind(_this);
+    _this.emptyValue = _this.emptyValue.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    var ref;
 
-    var ref = void 0;
     if (props.inputRef && typeof props.inputRef === 'function') {
       ref = props.inputRef();
-    } else if (props.inputRef && _typeof(props.inputRef) === 'object') {
+    } else if (props.inputRef && typeof props.inputRef === 'object') {
       ref = props.inputRef;
     }
 
-    _this.inputRef = ref ? ref : React.createRef();
-    // this.rr = React.createRef();
+    _this.inputRef = ref ? ref : React.createRef(); // this.rr = React.createRef();
 
     _this.values = _this.readValues(props.value);
     _this.previousValue = _this.values.value;
     return _this;
   }
-
   /**
    * @param {string} value
    */
 
 
   _createClass(CardNumberInput, [{
-    key: 'emptyValue',
+    key: "emptyValue",
     value: function emptyValue() {
       this.updateState(this.resetValues());
     }
-
-    /**
-     * @param {number} section
-     *  */
-
-
-    /**
-     * @param {string} value
-     */
-
-
-    /**
-     * @param {number} selectionStart
-     */
-
-
-    /**
-     * @param {string} value
-     */
-
   }, {
-    key: 'shouldComponentUpdate',
+    key: "shouldComponentUpdate",
     value: function shouldComponentUpdate(nextProps, nextState) {
       if (nextProps.value !== this.values.value || nextProps.numberFormat !== this.props.numberFormat) {
         this.updateState(this.readValues(nextProps.value));
       }
+
       if (!shallowEqualObjects(nextProps.style, this.props.style)) {
         return true;
       }
+
       if (nextProps.className !== this.props.className) {
         this.inputRef.current.className = nextProps.className;
       }
+
       return false;
     }
   }, {
-    key: 'render',
+    key: "render",
     value: function render() {
-      var _props = this.props,
-          value = _props.value,
-          onChange = _props.onChange,
-          onFocus = _props.onFocus,
-          onBlur = _props.onBlur,
-          onInput = _props.onInput,
-          onPast = _props.onPast,
-          onKeyDown = _props.onKeyDown,
-          onShowDialog = _props.onShowDialog,
-          pattern = _props.pattern,
-          inputMode = _props.inputMode,
-          type = _props.type,
-          inputRef = _props.inputRef,
-          numberFormat = _props.numberFormat,
-          rest = _objectWithoutProperties(_props, ['value', 'onChange', 'onFocus', 'onBlur', 'onInput', 'onPast', 'onKeyDown', 'onShowDialog', 'pattern', 'inputMode', 'type', 'inputRef', 'numberFormat']);
+      var _this$props = this.props,
+          value = _this$props.value,
+          onChange = _this$props.onChange,
+          onFocus = _this$props.onFocus,
+          onBlur = _this$props.onBlur,
+          onInput = _this$props.onInput,
+          onPast = _this$props.onPast,
+          onKeyDown = _this$props.onKeyDown,
+          onShowDialog = _this$props.onShowDialog,
+          pattern = _this$props.pattern,
+          inputMode = _this$props.inputMode,
+          type = _this$props.type,
+          inputRef = _this$props.inputRef,
+          numberFormat = _this$props.numberFormat,
+          rest = _objectWithoutProperties(_this$props, ["value", "onChange", "onFocus", "onBlur", "onInput", "onPast", "onKeyDown", "onShowDialog", "pattern", "inputMode", "type", "inputRef", "numberFormat"]);
 
-      var valueToShow = this.values.valueToShow;
-
-      // const localInputMode = this.props.type === 'tel' ? 'tel' : 'numeric'; // as we use type=tel, then we do not need it any more
+      var valueToShow = this.values.valueToShow; // const localInputMode = this.props.type === 'tel' ? 'tel' : 'numeric'; // as we use type=tel, then we do not need it any more
       // const localPattern = '[0-9]*'; // it has problem with the form checking, as we insert persian digit, it is not acceptable for the browser
 
-      return React.createElement('input', Object.assign({
+      return React.createElement("input", Object.assign({
         ref: this.inputRef,
         type: "tel" // I tried to use text and using inputMode, but it does not work on Safari
         // inputMode={localInputMode}
         // xInputMode={localnputMode} // in firefox OS it is x-inputmode, I do not know how to handle it
-        , dir: "ltr"
-        // pattern={localPattern}
-        , defaultValue: valueToShow,
+        ,
+        dir: "ltr" // pattern={localPattern}
+        ,
+        defaultValue: valueToShow,
         onKeyDown: this.handleKeyDown,
         onPaste: this.handlePaste,
         onInput: this.handleInput,
         onFocus: this.handleFocus,
         onBlur: this.handleBlur
-      }, rest));
-      //<p ref={this.rr} type={"text"}>empty</p></div>
+      }, rest)); //<p ref={this.rr} type={"text"}>empty</p></div>
     }
   }]);
 
   return CardNumberInput;
 }(Component);
-
-CardNumberInput.propTypes = {
-  /**
-   * The ref to pass on the input, if empty it will be created internally
-   */
-  inputRef: PropTypes.any,
-  /**
-   * The name that will be set while firing the onChange event in the target object
-   */
-  name: PropTypes.string,
-  /**
-   * Callback function that is fired when the cart number value changes.
-   */
-  onChange: PropTypes.func,
-  /**
-   * Override the inline-styles of the root element.
-   */
-  style: PropTypes.object,
-  /**
-   * The css class name of the root element.
-   */
-  className: PropTypes.string,
-  /**
-   * Disables the DateTimeInput.
-   */
-  disabled: PropTypes.bool,
-  /**
-   * makes the DateTimeInput readonly.
-   */
-  readOnly: PropTypes.bool,
-  /**
-   * Callback function that is fired when a click event occurs on the input.
-   */
-  onClick: PropTypes.func,
-  /**
-   * Callback function that is fired when the input gains focus.
-   */
-  onFocus: PropTypes.func,
-  /**
-   * Sets the value for the card number input.
-   */
-  value: PropTypes.string
-};
-
 
 export default CardNumberInput;
