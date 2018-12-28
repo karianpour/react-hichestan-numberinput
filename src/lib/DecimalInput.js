@@ -156,11 +156,17 @@ class DecimalInput extends Component {
     if(this.values.valueToShow===event.target.value) return;
 
     const enteredValue = this.stripAnyThingButNumber(event.target.value);
-    const selectionStart = event.target.selectionStart;
-    const selectionEnd = event.target.selectionEnd;
-    const newState = this.updateValue('', selectionStart, selectionEnd, enteredValue, this.props.numberFormat);
 
-    this.updateState(newState);
+    const firstHyphenIndex = enteredValue.indexOf('-');
+    const secondHyphenIndex = enteredValue.indexOf('-', firstHyphenIndex + 1);
+    if(secondHyphenIndex >= 0 || firstHyphenIndex > 0){
+      this.updateState(this.negate());
+    }else{
+      const selectionStart = event.target.selectionStart;
+      const selectionEnd = event.target.selectionEnd;
+      const newState = this.updateValue('', selectionStart, selectionEnd, enteredValue, this.props.numberFormat);
+      this.updateState(newState);
+    }
   };
 
   mapValue = (value, numberFormat) => {
