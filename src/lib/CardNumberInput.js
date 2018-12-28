@@ -1,24 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import shallowEqualObjects from 'shallow-equal/objects';
-import { mapToFarsi, mapToLatin, hasStringACharToGoToNext, NUMBER_FORMAT_FARSI, NUMBER_FORMAT_LATIN} from './util';
+import { mapToFarsi, mapToLatin, hasStringACharToGoToNext, repeatStr, NUMBER_FORMAT_FARSI, NUMBER_FORMAT_LATIN} from './util';
 
 const CARD_SEPERATOR =  '-';
 const SEPERATORES_REGEX = new RegExp(`[ ${CARD_SEPERATOR}]`, 'g');
 const MATCH_REGEX = new RegExp(`[0-9]{4}[${CARD_SEPERATOR}][0-9]{4}[${CARD_SEPERATOR}][0-9]{4}[${CARD_SEPERATOR}][0-9]{4}`);
 const EMPTY_VALUE = `    ${CARD_SEPERATOR}    ${CARD_SEPERATOR}    ${CARD_SEPERATOR}    `;
 
-/**
- * @param {string} str
- * @param {number} n
- */
-function repeatStr(str, n){
-  let r = '';
-  for(let i=0; i<n; i++){
-    r += str;
-  }
-  return r;
-}
 
 class CardNumberInput extends Component {
 
@@ -44,11 +33,11 @@ class CardNumberInput extends Component {
      */
     className: PropTypes.string,
     /**
-     * Disables the DateTimeInput.
+     * Disables the card number.
      */
     disabled: PropTypes.bool,
     /**
-     * makes the DateTimeInput readonly.
+     * makes the card number readonly.
      */
     readOnly: PropTypes.bool,
     /**

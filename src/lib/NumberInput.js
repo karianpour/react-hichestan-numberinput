@@ -1,9 +1,53 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import shallowEqualObjects from 'shallow-equal/objects';
 
 import { mapToFarsi, mapToLatin, stripAnyThingButDigits, NUMBER_FORMAT_FARSI, NUMBER_FORMAT_LATIN} from './util';
 
 class NumberInput extends Component {
+
+  static propTypes = {
+    /**
+     * The ref to pass on the input, if empty it will be created internally
+     */
+    inputRef: PropTypes.any,
+    /**
+     * The name that will be set while firing the onChange event in the target object
+     */
+    name: PropTypes.string,
+    /**
+     * Callback function that is fired when the cart number value changes.
+     */
+    onChange: PropTypes.func,
+    /**
+     * Override the inline-styles of the root element.
+     */
+    style: PropTypes.object,
+    /**
+     * The css class name of the root element.
+     */
+    className: PropTypes.string,
+    /**
+     * Disables the number input.
+     */
+    disabled: PropTypes.bool,
+    /**
+     * makes the number input readonly.
+     */
+    readOnly: PropTypes.bool,
+    /**
+     * Callback function that is fired when a click event occurs on the input.
+     */
+    onClick: PropTypes.func,
+    /**
+     * Callback function that is fired when the input gains focus.
+     */
+    onFocus: PropTypes.func,
+    /**
+     * Sets the value for the number input.
+     */
+    value: PropTypes.string,
+  };
 
   constructor(props) {
     super(props);
@@ -47,9 +91,14 @@ class NumberInput extends Component {
       this.updateState(this.updateValue(event.target, event.key, this.props.numberFormat));
     }else if(event.keyCode>=35 && event.keyCode<=40){ //arrows
     }else if(event.keyCode===9){ //tab
+    }else if(event.keyCode===13){ //return
+      this.hideKeyboard();
     }else if((event.ctrlKey || event.metaKey) && (event.keyCode===67 || event.keyCode===86)){ //copy/paste
     }else if((event.ctrlKey || event.metaKey) && (event.keyCode===82)){ //refresh key
-    }else if(event.keyCode===116){ // F5 refresh key
+    }else if((event.ctrlKey || event.metaKey) && (event.keyCode===82)){ //refresh key
+    }else if((event.ctrlKey || event.metaKey) && (event.keyCode===73)){ //inspector
+    }else if((event.ctrlKey || event.metaKey) && (event.keyCode===65)){ //select all
+    }else if(event.keyCode>=112 && event.keyCode<=123){ // All other F keys
     }else if(event.keyCode===229){ //android bug workaround
     }else{
       // console.log('other');
@@ -58,6 +107,10 @@ class NumberInput extends Component {
       event.preventDefault();
     }
   };
+
+  hideKeyboard = () => {
+    this.inputRef.current.blur();
+  }
 
   handlePaste = (event) => {
     event.preventDefault();
@@ -89,14 +142,20 @@ class NumberInput extends Component {
     if(!newState) return;
 
     this.values = newState;
-    this.inputRef.current.value = this.values.valueToShow;
+    let fireOnChangeInTheEnd = false;
+    if(this.inputRef.current.value !== this.values.valueToShow){
+      fireOnChangeInTheEnd = true;
+      this.inputRef.current.value = this.values.valueToShow;
+    }
     if(this.inputRef.current===document.activeElement){
       // console.log('has focus :D');
       this.inputRef.current.setSelectionRange(this.values.selectionStart, this.values.selectionEnd);
     }else{
       // console.log('has not focus :(');
     }
-    this.fireOnChange();
+    if(fireOnChangeInTheEnd){
+      this.fireOnChange();
+    }
   };
 
   updateValue = (element, enteredValue, numberFormat) => {

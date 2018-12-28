@@ -13,24 +13,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import shallowEqualObjects from 'shallow-equal/objects';
-import { mapToFarsi, mapToLatin, hasStringACharToGoToNext, NUMBER_FORMAT_FARSI, NUMBER_FORMAT_LATIN } from './util';
+import { mapToFarsi, mapToLatin, hasStringACharToGoToNext, repeatStr, NUMBER_FORMAT_FARSI, NUMBER_FORMAT_LATIN } from './util';
 
 var CARD_SEPERATOR = '-';
 var SEPERATORES_REGEX = new RegExp('[ ' + CARD_SEPERATOR + ']', 'g');
 var MATCH_REGEX = new RegExp('[0-9]{4}[' + CARD_SEPERATOR + '][0-9]{4}[' + CARD_SEPERATOR + '][0-9]{4}[' + CARD_SEPERATOR + '][0-9]{4}');
 var EMPTY_VALUE = '    ' + CARD_SEPERATOR + '    ' + CARD_SEPERATOR + '    ' + CARD_SEPERATOR + '    ';
-
-/**
- * @param {string} str
- * @param {number} n
- */
-function repeatStr(str, n) {
-  var r = '';
-  for (var i = 0; i < n; i++) {
-    r += str;
-  }
-  return r;
-}
 
 var CardNumberInput = function (_Component) {
   _inherits(CardNumberInput, _Component);
@@ -525,11 +513,11 @@ CardNumberInput.propTypes = {
    */
   className: PropTypes.string,
   /**
-   * Disables the DateTimeInput.
+   * Disables the card number.
    */
   disabled: PropTypes.bool,
   /**
-   * makes the DateTimeInput readonly.
+   * makes the card number readonly.
    */
   readOnly: PropTypes.bool,
   /**

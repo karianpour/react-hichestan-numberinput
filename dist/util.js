@@ -32,3 +32,15 @@ export function hasStringACharToGoToNext(str) {
   if (str.indexOf('،') >= 0) return true;
   return false;
 }
+
+/**
+ * @param {string} str
+ * @param {number} n
+ */
+export function repeatStr(str, n) {
+  var r = '';
+  for (var i = 0; i < n; i++) {
+    r += str;
+  }
+  return r;
+}

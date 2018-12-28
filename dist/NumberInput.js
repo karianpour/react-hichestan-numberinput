@@ -9,6 +9,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import shallowEqualObjects from 'shallow-equal/objects';
 
 import { mapToFarsi, mapToLatin, stripAnyThingButDigits, NUMBER_FORMAT_FARSI, NUMBER_FORMAT_LATIN } from './util';
@@ -84,6 +85,49 @@ var NumberInput = function (_Component) {
   return NumberInput;
 }(Component);
 
+NumberInput.propTypes = {
+  /**
+   * The ref to pass on the input, if empty it will be created internally
+   */
+  inputRef: PropTypes.any,
+  /**
+   * The name that will be set while firing the onChange event in the target object
+   */
+  name: PropTypes.string,
+  /**
+   * Callback function that is fired when the cart number value changes.
+   */
+  onChange: PropTypes.func,
+  /**
+   * Override the inline-styles of the root element.
+   */
+  style: PropTypes.object,
+  /**
+   * The css class name of the root element.
+   */
+  className: PropTypes.string,
+  /**
+   * Disables the number input.
+   */
+  disabled: PropTypes.bool,
+  /**
+   * makes the number input readonly.
+   */
+  readOnly: PropTypes.bool,
+  /**
+   * Callback function that is fired when a click event occurs on the input.
+   */
+  onClick: PropTypes.func,
+  /**
+   * Callback function that is fired when the input gains focus.
+   */
+  onFocus: PropTypes.func,
+  /**
+   * Sets the value for the number input.
+   */
+  value: PropTypes.string
+};
+
 var _initialiseProps = function _initialiseProps() {
   var _this2 = this;
 
@@ -126,9 +170,15 @@ var _initialiseProps = function _initialiseProps() {
       _this2.updateState(_this2.updateValue(event.target, event.key, _this2.props.numberFormat));
     } else if (event.keyCode >= 35 && event.keyCode <= 40) {//arrows
     } else if (event.keyCode === 9) {//tab
+    } else if (event.keyCode === 13) {
+      //return
+      _this2.hideKeyboard();
     } else if ((event.ctrlKey || event.metaKey) && (event.keyCode === 67 || event.keyCode === 86)) {//copy/paste
     } else if ((event.ctrlKey || event.metaKey) && event.keyCode === 82) {//refresh key
-    } else if (event.keyCode === 116) {// F5 refresh key
+    } else if ((event.ctrlKey || event.metaKey) && event.keyCode === 82) {//refresh key
+    } else if ((event.ctrlKey || event.metaKey) && event.keyCode === 73) {//inspector
+    } else if ((event.ctrlKey || event.metaKey) && event.keyCode === 65) {//select all
+    } else if (event.keyCode >= 112 && event.keyCode <= 123) {// All other F keys
     } else if (event.keyCode === 229) {//android bug workaround
     } else {
       // console.log('other');
@@ -136,6 +186,10 @@ var _initialiseProps = function _initialiseProps() {
       // this.rr.current.innerText = `keyCode: ${event.keyCode} key:  ${event.key} ctrlKey: ${event.ctrlKey}`;
       event.preventDefault();
     }
+  };
+
+  this.hideKeyboard = function () {
+    _this2.inputRef.current.blur();
   };
 
   this.handlePaste = function (event) {
@@ -167,14 +221,20 @@ var _initialiseProps = function _initialiseProps() {
     if (!newState) return;
 
     _this2.values = newState;
-    _this2.inputRef.current.value = _this2.values.valueToShow;
+    var fireOnChangeInTheEnd = false;
+    if (_this2.inputRef.current.value !== _this2.values.valueToShow) {
+      fireOnChangeInTheEnd = true;
+      _this2.inputRef.current.value = _this2.values.valueToShow;
+    }
     if (_this2.inputRef.current === document.activeElement) {
       // console.log('has focus :D');
       _this2.inputRef.current.setSelectionRange(_this2.values.selectionStart, _this2.values.selectionEnd);
     } else {
       // console.log('has not focus :(');
     }
-    _this2.fireOnChange();
+    if (fireOnChangeInTheEnd) {
+      _this2.fireOnChange();
+    }
   };
 
   this.updateValue = function (element, enteredValue, numberFormat) {

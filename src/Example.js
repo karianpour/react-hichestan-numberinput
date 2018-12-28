@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { NumberInput, CardNumberInput } from "./lib";
+import { NumberInput, DecimalInput, CardNumberInput, NUMBER_FORMAT_FARSI } from "./lib";
 import {NUMBER_FORMAT_LATIN} from './lib';
 import './Example.css';
 
@@ -84,12 +84,25 @@ class Example extends Component {
             <NumberInput name="Number2" className={className} style={style} value={this.state.Number2} numberFormat={NUMBER_FORMAT_LATIN} onChange={this.handleChange} placeholder="type/paste a number" />
           </label>
         </div>
-        <br/>
-        <br/>
         <label>خروجی
           <br/>
           <input type="text" name="Number2_value" style={{width: 250}} value={this.state.Number2} onChange={this.handleValueChange} placeholder="این فیلد خروجی است" />
         </label>
+        <br/>
+        <br/>
+        <br/>
+        <div>
+          <label>
+            عدد اعشاری
+            <br/>
+            <DecimalInput name="Number3" className={className} style={style} value={this.state.Number3} numberFormat={NUMBER_FORMAT_FARSI} onChange={this.handleChange} placeholder="type/paste a number" />
+          </label>
+        </div>
+        <label>خروجی
+          <br/>
+          <input type="text" name="Number3_value" style={{width: 250}} value={this.state.Number3} onChange={this.handleValueChange} placeholder="این فیلد خروجی است" />
+        </label>
+        <br/>
         <br/>
         <div>
           <label>
