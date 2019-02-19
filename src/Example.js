@@ -108,7 +108,7 @@ class Example extends Component {
           <label>
             نمونه تلفن فارسی
             <br/>
-            <NumberInput type="tel" name="Tel1" className={className} style={style} value={this.state.Tel1} onChange={this.handleChange} placeholder="type/paste a number" />
+            <NumberInput type="tel" name="Tel1" className={className} style={style} value={this.state.Tel1} onChange={this.handleChange} maxLength={12} placeholder="type/paste a number" />
           </label>
         </div>
         <br/>

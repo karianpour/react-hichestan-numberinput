@@ -36,6 +36,10 @@ class NumberInput extends Component {
      */
     readOnly: PropTypes.bool,
     /**
+     * accepted number digit count.
+     */
+    maxLength: PropTypes.number,
+    /**
      * Callback function that is fired when a click event occurs on the input.
      */
     onClick: PropTypes.func,
@@ -163,6 +167,10 @@ class NumberInput extends Component {
     let valueToShow = element.value;
     let selectionStart = element.selectionStart;
     let selectionEnd = element.selectionEnd;
+
+    if(this.props.maxLength && valueToShow.length + enteredValue.length > this.props.maxLength){
+      return;
+    }
 
     valueToShow = valueToShow.substring(0, selectionStart) + enteredValueMapped + valueToShow.substring(selectionEnd);
 

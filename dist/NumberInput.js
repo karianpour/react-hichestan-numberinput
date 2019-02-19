@@ -115,6 +115,10 @@ NumberInput.propTypes = {
    */
   readOnly: PropTypes.bool,
   /**
+   * accepted number digit count.
+   */
+  maxLength: PropTypes.number,
+  /**
    * Callback function that is fired when a click event occurs on the input.
    */
   onClick: PropTypes.func,
@@ -242,6 +246,10 @@ var _initialiseProps = function _initialiseProps() {
     var valueToShow = element.value;
     var selectionStart = element.selectionStart;
     var selectionEnd = element.selectionEnd;
+
+    if (_this2.props.maxLength && valueToShow.length + enteredValue.length > _this2.props.maxLength) {
+      return;
+    }
 
     valueToShow = valueToShow.substring(0, selectionStart) + enteredValueMapped + valueToShow.substring(selectionEnd);
 
