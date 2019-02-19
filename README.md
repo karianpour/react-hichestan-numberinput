@@ -19,6 +19,7 @@ Here you can experience a live [demo](https://karianpour.github.io/react-hichest
 - Forward any style (or any other attributes) given to the component to the inner input element.
 - Forward the style and className changes after the first render to the inner input element.
 - Showing tel keypad if type='tel'
+- maxLength property to control maxumun acceptable number of digits
 
 ## Installation
 
