@@ -131,7 +131,7 @@ class DecimalInput extends Component {
     }else if(event.keyCode===229){ //android bug workaround
     }else{
       // console.log('other');
-      console.log('keyCode: ', event.keyCode, 'key: ', event.key, 'ctrlKey: ', event.ctrlKey);
+      // console.log('keyCode: ', event.keyCode, 'key: ', event.key, 'ctrlKey: ', event.ctrlKey);
       // this.rr.current.innerText = `keyCode: ${event.keyCode} key:  ${event.key} ctrlKey: ${event.ctrlKey}`;
       event.preventDefault();
     }
@@ -165,7 +165,7 @@ class DecimalInput extends Component {
       const selectionStart = event.target.selectionStart;
       const selectionEnd = event.target.selectionEnd;
       const newState = this.updateValue('', selectionStart, selectionEnd, enteredValue, this.props.numberFormat);
-      this.updateState(newState);
+      this.updateState(newState, true);
     }
   };
 
@@ -183,7 +183,7 @@ class DecimalInput extends Component {
   };
 
 
-  updateState = (newState) => {
+  updateState = (newState, forceFireChange) => {
     if(!newState) return;
 
     this.values = newState;
@@ -198,7 +198,7 @@ class DecimalInput extends Component {
     }else{
       // console.log('has not focus :(');
     }
-    if(fireOnChangeInTheEnd){
+    if(fireOnChangeInTheEnd || forceFireChange){
       this.fireOnChange();
     }
   };

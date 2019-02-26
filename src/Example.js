@@ -7,6 +7,7 @@ class Example extends Component {
   state = {
     Number1: '',
     Number2: '123',
+    Number3: 0,
     color: false,
     bgColor: false,
     Tel1: '0912',
@@ -61,6 +62,7 @@ class Example extends Component {
 
     return (
       <React.Fragment>
+        <form autoComplete="on">
         <div>
           <br/>
           <br/>
@@ -130,6 +132,8 @@ class Example extends Component {
         <br/>
         <button onClick={this.toggleColor}>toggle className</button>
         <button onClick={this.toggleBgColor}>toggle style</button>
+        <input type="submit"/>
+        </form>
       </React.Fragment>
     );
   }

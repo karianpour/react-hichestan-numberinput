@@ -209,7 +209,7 @@ var _initialiseProps = function _initialiseProps() {
 
     var enteredValue = stripAnyThingButDigits(event.target.value);
 
-    _this2.updateState(_this2.recheckValue(event.target, enteredValue, _this2.props.numberFormat));
+    _this2.updateState(_this2.recheckValue(event.target, enteredValue, _this2.props.numberFormat), true);
   };
 
   this.mapValue = function (value, numberFormat) {
@@ -221,7 +221,7 @@ var _initialiseProps = function _initialiseProps() {
     return mapToFarsi(value);
   };
 
-  this.updateState = function (newState) {
+  this.updateState = function (newState, forceFireChange) {
     if (!newState) return;
 
     _this2.values = newState;
@@ -236,7 +236,7 @@ var _initialiseProps = function _initialiseProps() {
     } else {
       // console.log('has not focus :(');
     }
-    if (fireOnChangeInTheEnd) {
+    if (fireOnChangeInTheEnd || forceFireChange) {
       _this2.fireOnChange();
     }
   };

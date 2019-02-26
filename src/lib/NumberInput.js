@@ -129,7 +129,7 @@ class NumberInput extends Component {
 
     const enteredValue = stripAnyThingButDigits(event.target.value);
 
-    this.updateState(this.recheckValue(event.target, enteredValue, this.props.numberFormat));
+    this.updateState(this.recheckValue(event.target, enteredValue, this.props.numberFormat), true);
   };
 
   mapValue = (value, numberFormat) => {
@@ -142,7 +142,7 @@ class NumberInput extends Component {
   };
 
 
-  updateState = (newState) => {
+  updateState = (newState, forceFireChange) => {
     if(!newState) return;
 
     this.values = newState;
@@ -157,7 +157,7 @@ class NumberInput extends Component {
     }else{
       // console.log('has not focus :(');
     }
-    if(fireOnChangeInTheEnd){
+    if(fireOnChangeInTheEnd || forceFireChange){
       this.fireOnChange();
     }
   };
