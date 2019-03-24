@@ -20,6 +20,7 @@ Here you can experience a live [demo](https://karianpour.github.io/react-hichest
 - Forward the style and className changes after the first render to the inner input element.
 - Showing tel keypad if type='tel'
 - maxLength property to control maxumun acceptable number of digits
+- typeScript friendly (type are not complete yet but it works)
 
 ## Installation
 
@@ -27,6 +28,20 @@ Use `npm i react-hichestan-numberinput` in order to install the module.
 
 ## Usage
 see the example
+
+## Material-ui
+
+If you happened to use it with material-ui v3, this is the way I used it :
+```
+import TextField from '@material-ui/core/TextField';
+import { NumberInput } from 'react-hichestan-numberinput';
+
+    <TextField
+      InputProps={{
+        inputComponent: NumberInput,
+        inputProps: {maxLength: 12},
+      }}
+```
 
 ### number formats
 'FARSI' / 'LATIN'
