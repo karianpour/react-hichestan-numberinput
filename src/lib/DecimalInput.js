@@ -11,6 +11,7 @@ class DecimalInput extends Component {
      * The ref to pass on the input, if empty it will be created internally
      */
     inputRef: PropTypes.any,
+    getInputRef: PropTypes.any,
     /**
      * The name that will be set while firing the onChange event in the target object
      */
@@ -59,7 +60,11 @@ class DecimalInput extends Component {
 
   constructor(props) {
     super(props);
-    this.inputRef = props.ref ? props.ref : React.createRef();
+    let ref = props.inputRef || props.getInputRef;
+    if(ref && typeof ref === 'function'){
+      ref = ref();
+    }
+    this.inputRef = ref ? ref : React.createRef();
     // this.rr = React.createRef();
 
     this.thousandSeparator = props.thousandSeparator || this.defaultThousandSeparator();
@@ -396,7 +401,7 @@ class DecimalInput extends Component {
   }
 
   render() {
-    const {value, onChange, onInput, onPast, onKeyDown, pattern, inputMode, type, ref, numberFormat, ...rest} = this.props;
+    const {value, onChange, onInput, onPast, onKeyDown, pattern, inputMode, type, ref, inputRef, getInputRef, numberFormat, ...rest} = this.props;
     const {valueToShow} = this.values;
 
     // const localInputMode = this.props.type === 'tel' ? 'tel' : 'numeric'; // as we use type=tel, then we do not need it any more

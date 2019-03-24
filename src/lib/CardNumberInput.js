@@ -16,6 +16,7 @@ class CardNumberInput extends Component {
      * The ref to pass on the input, if empty it will be created internally
      */
     inputRef: PropTypes.any,
+    getInputRef: PropTypes.any,
     /**
      * The name that will be set while firing the onChange event in the target object
      */
@@ -58,13 +59,10 @@ class CardNumberInput extends Component {
     super(props);
     this.emptyValue = this.emptyValue.bind(this);
 
-    let ref;
-    if(props.inputRef && typeof props.inputRef === 'function'){
-      ref = props.inputRef();
-    }else if(props.inputRef && typeof props.inputRef === 'object'){
-      ref = props.inputRef;
+    let ref = props.inputRef || props.getInputRef;
+    if(ref && typeof ref === 'function'){
+      ref = ref();
     }
-
     this.inputRef = ref ? ref : React.createRef();
     // this.rr = React.createRef();
 
@@ -462,7 +460,7 @@ class CardNumberInput extends Component {
   }
 
   render() {
-    const {value, onChange, onFocus, onBlur, onInput, onPast, onKeyDown, onShowDialog, pattern, inputMode, type, inputRef, numberFormat, ...rest} = this.props;
+    const {value, onChange, onFocus, onBlur, onInput, onPast, onKeyDown, onShowDialog, pattern, inputMode, type, inputRef, getInputRef, numberFormat, ...rest} = this.props;
     const {valueToShow} = this.values;
 
     // const localInputMode = this.props.type === 'tel' ? 'tel' : 'numeric'; // as we use type=tel, then we do not need it any more

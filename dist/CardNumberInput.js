@@ -1,5 +1,3 @@
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
@@ -387,13 +385,10 @@ var CardNumberInput = function (_Component) {
 
     _this.emptyValue = _this.emptyValue.bind(_this);
 
-    var ref = void 0;
-    if (props.inputRef && typeof props.inputRef === 'function') {
-      ref = props.inputRef();
-    } else if (props.inputRef && _typeof(props.inputRef) === 'object') {
-      ref = props.inputRef;
+    var ref = props.inputRef || props.getInputRef;
+    if (ref && typeof ref === 'function') {
+      ref = ref();
     }
-
     _this.inputRef = ref ? ref : React.createRef();
     // this.rr = React.createRef();
 
@@ -462,8 +457,9 @@ var CardNumberInput = function (_Component) {
           inputMode = _props.inputMode,
           type = _props.type,
           inputRef = _props.inputRef,
+          getInputRef = _props.getInputRef,
           numberFormat = _props.numberFormat,
-          rest = _objectWithoutProperties(_props, ['value', 'onChange', 'onFocus', 'onBlur', 'onInput', 'onPast', 'onKeyDown', 'onShowDialog', 'pattern', 'inputMode', 'type', 'inputRef', 'numberFormat']);
+          rest = _objectWithoutProperties(_props, ['value', 'onChange', 'onFocus', 'onBlur', 'onInput', 'onPast', 'onKeyDown', 'onShowDialog', 'pattern', 'inputMode', 'type', 'inputRef', 'getInputRef', 'numberFormat']);
 
       var valueToShow = this.values.valueToShow;
 
@@ -496,6 +492,7 @@ CardNumberInput.propTypes = {
    * The ref to pass on the input, if empty it will be created internally
    */
   inputRef: PropTypes.any,
+  getInputRef: PropTypes.any,
   /**
    * The name that will be set while firing the onChange event in the target object
    */

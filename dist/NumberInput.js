@@ -24,7 +24,11 @@ var NumberInput = function (_Component) {
 
     _initialiseProps.call(_this);
 
-    _this.inputRef = props.ref ? props.ref : React.createRef();
+    var ref = props.inputRef || props.getInputRef;
+    if (ref && typeof ref === 'function') {
+      ref = ref();
+    }
+    _this.inputRef = ref ? ref : React.createRef();
     // this.rr = React.createRef();
 
     _this.values = _this.readValuesFromProps(props);
@@ -58,8 +62,10 @@ var NumberInput = function (_Component) {
           inputMode = _props.inputMode,
           type = _props.type,
           ref = _props.ref,
+          inputRef = _props.inputRef,
+          getInputRef = _props.getInputRef,
           numberFormat = _props.numberFormat,
-          rest = _objectWithoutProperties(_props, ['value', 'onChange', 'onInput', 'onPast', 'onKeyDown', 'pattern', 'inputMode', 'type', 'ref', 'numberFormat']);
+          rest = _objectWithoutProperties(_props, ['value', 'onChange', 'onInput', 'onPast', 'onKeyDown', 'pattern', 'inputMode', 'type', 'ref', 'inputRef', 'getInputRef', 'numberFormat']);
 
       var valueToShow = this.values.valueToShow;
 
@@ -90,6 +96,7 @@ NumberInput.propTypes = {
    * The ref to pass on the input, if empty it will be created internally
    */
   inputRef: PropTypes.any,
+  getInputRef: PropTypes.any,
   /**
    * The name that will be set while firing the onChange event in the target object
    */
