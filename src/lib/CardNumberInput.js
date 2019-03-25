@@ -460,7 +460,7 @@ class CardNumberInput extends Component {
   }
 
   render() {
-    const {value, onChange, onFocus, onBlur, onInput, onPast, onKeyDown, onShowDialog, pattern, inputMode, type, inputRef, getInputRef, numberFormat, ...rest} = this.props;
+    const {value, onChange, onFocus, onBlur, onInput, onPast, onKeyDown, onShowDialog, pattern, inputMode, type, inputRef, getInputRef, numberFormat, defaultValue, ...rest} = this.props;
     const {valueToShow} = this.values;
 
     // const localInputMode = this.props.type === 'tel' ? 'tel' : 'numeric'; // as we use type=tel, then we do not need it any more

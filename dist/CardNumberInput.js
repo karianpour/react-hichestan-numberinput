@@ -459,7 +459,8 @@ var CardNumberInput = function (_Component) {
           inputRef = _props.inputRef,
           getInputRef = _props.getInputRef,
           numberFormat = _props.numberFormat,
-          rest = _objectWithoutProperties(_props, ['value', 'onChange', 'onFocus', 'onBlur', 'onInput', 'onPast', 'onKeyDown', 'onShowDialog', 'pattern', 'inputMode', 'type', 'inputRef', 'getInputRef', 'numberFormat']);
+          defaultValue = _props.defaultValue,
+          rest = _objectWithoutProperties(_props, ['value', 'onChange', 'onFocus', 'onBlur', 'onInput', 'onPast', 'onKeyDown', 'onShowDialog', 'pattern', 'inputMode', 'type', 'inputRef', 'getInputRef', 'numberFormat', 'defaultValue']);
 
       var valueToShow = this.values.valueToShow;
 

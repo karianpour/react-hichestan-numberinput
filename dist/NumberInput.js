@@ -65,7 +65,8 @@ var NumberInput = function (_Component) {
           inputRef = _props.inputRef,
           getInputRef = _props.getInputRef,
           numberFormat = _props.numberFormat,
-          rest = _objectWithoutProperties(_props, ['value', 'onChange', 'onInput', 'onPast', 'onKeyDown', 'pattern', 'inputMode', 'type', 'ref', 'inputRef', 'getInputRef', 'numberFormat']);
+          defaultValue = _props.defaultValue,
+          rest = _objectWithoutProperties(_props, ['value', 'onChange', 'onInput', 'onPast', 'onKeyDown', 'pattern', 'inputMode', 'type', 'ref', 'inputRef', 'getInputRef', 'numberFormat', 'defaultValue']);
 
       var valueToShow = this.values.valueToShow;
 
