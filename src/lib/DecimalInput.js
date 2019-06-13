@@ -47,7 +47,10 @@ class DecimalInput extends Component {
     /**
      * Sets the value for the decimal input.
      */
-    value: PropTypes.number,
+    value: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number
+    ]),
     /**
      * Sets the thousand separator
      */
@@ -56,6 +59,10 @@ class DecimalInput extends Component {
      * Sets the decimal separator
      */
     decimalSeparator: PropTypes.string,
+    /**
+     * makes the value string, it is useful for big decimals.
+     */
+    asString: PropTypes.bool,
   };
 
   constructor(props) {
@@ -85,8 +92,8 @@ class DecimalInput extends Component {
 
   readValuesFromProps = (props) => {
     if(props.value){
-      const value = props.value ? Number(props.value) : undefined;
-      return this.updateValue('', 0, 0, value, props.numberFormat);
+      const value = props.value ? props.asString ? props.value : Number(props.value) : undefined;
+      return this.updateValue('', 0, 0, value, props.numberFormat, props.asString);
     }
 
     return {
@@ -101,25 +108,25 @@ class DecimalInput extends Component {
     // console.log('keyCode: ', event.keyCode, 'key: ', event.key);
     if(event.keyCode===8) { //backspace
       event.preventDefault();
-      this.updateState(this.deleteValue(event.target, -1));
+      this.updateState(this.deleteValue(event.target, -1, this.props.asString));
     }else if(event.keyCode===46){ //delete
       event.preventDefault();
-      this.updateState(this.deleteValue(event.target, 1));
+      this.updateState(this.deleteValue(event.target, 1, this.props.asString));
     }else if(event.keyCode>=48 && event.keyCode<=57){ //digits
       event.preventDefault();
       // console.log('digit');
-      this.updateState(this.updateElementValue(event.target, (event.keyCode - 48).toString(), this.props.numberFormat));
+      this.updateState(this.updateElementValue(event.target, (event.keyCode - 48).toString(), this.props.numberFormat, this.props.asString));
     }else if(event.keyCode>=96 && event.keyCode<=105){ //digits
       event.preventDefault();
       // console.log('digit');
-      this.updateState(this.updateElementValue(event.target, (event.keyCode - 96).toString(), this.props.numberFormat));
+      this.updateState(this.updateElementValue(event.target, (event.keyCode - 96).toString(), this.props.numberFormat, this.props.asString));
     }else if(event.key>='۰' && event.key<='۹'){ //digits
       event.preventDefault();
       // console.log('digit');
-      this.updateState(this.updateElementValue(event.target, event.key, this.props.numberFormat));
+      this.updateState(this.updateElementValue(event.target, event.key, this.props.numberFormat, this.props.asString));
     }else if(event.key==='.' || event.keyCode===190){ //point
       event.preventDefault();
-      this.updateState(this.updateElementValue(event.target, '.', this.props.numberFormat));
+      this.updateState(this.updateElementValue(event.target, '.', this.props.numberFormat, this.props.asString));
     }else if(event.key==='-' || event.keyCode===189){ // -
       event.preventDefault();
       this.updateState(this.negate());
@@ -154,7 +161,7 @@ class DecimalInput extends Component {
       enteredValue = enteredValue.replace(/[-]/g, '');
     }
 
-    this.updateState(this.updateElementValue(event.target, enteredValue, this.props.numberFormat));
+    this.updateState(this.updateElementValue(event.target, enteredValue, this.props.numberFormat, this.props.asString));
   };
 
   handleInput = (event) => {
@@ -169,7 +176,7 @@ class DecimalInput extends Component {
     }else{
       const selectionStart = event.target.selectionStart;
       const selectionEnd = event.target.selectionEnd;
-      const newState = this.updateValue('', selectionStart, selectionEnd, enteredValue, this.props.numberFormat);
+      const newState = this.updateValue('', selectionStart, selectionEnd, enteredValue, this.props.numberFormat, this.props.asString);
       this.updateState(newState, true);
     }
   };
@@ -238,14 +245,14 @@ class DecimalInput extends Component {
     };
   };
 
-  updateElementValue = (element, enteredValue, numberFormat) => {
+  updateElementValue = (element, enteredValue, numberFormat, asString) => {
     let currentValue = element.value;
     let selectionStart = element.selectionStart;
     let selectionEnd = element.selectionEnd;
-    return this.updateValue(currentValue, selectionStart, selectionEnd, enteredValue, numberFormat);
+    return this.updateValue(currentValue, selectionStart, selectionEnd, enteredValue, numberFormat, asString);
   }
 
-  updateValue = (currentValue, selectionStart, selectionEnd, enteredValue, numberFormat) => {
+  updateValue = (currentValue, selectionStart, selectionEnd, enteredValue, numberFormat, asString) => {
     const enteredValueMapped = this.mapDecimalSeparator(this.mapValue(enteredValue, numberFormat));
     let valueToShow = currentValue;
 
@@ -264,8 +271,15 @@ class DecimalInput extends Component {
     selectionStart = separated.selectionStart;
     selectionEnd = selectionStart;
 
-    const value = Number(this.stripThousandSeparator(mapToLatin(valueToShow)));
-    const valueIsValid = (typeof value === 'number' || value === undefined || value === null);
+    let value = this.stripThousandSeparator(mapToLatin(valueToShow));
+    let valueIsValid;
+    if(asString) {
+      const checkValue = Number(value);
+      valueIsValid = (typeof checkValue === 'number' || checkValue === undefined || checkValue === null);
+    }else{
+      value = Number(value);
+      valueIsValid = (typeof value === 'number' || value === undefined || value === null);
+    }
 
     return {
       value,
@@ -276,7 +290,7 @@ class DecimalInput extends Component {
     };
   };
 
-  deleteValue = (element, qty) => {
+  deleteValue = (element, qty, asString) => {
     let valueToShow = element.value;
     let selectionStart = element.selectionStart;
     let selectionEnd = element.selectionEnd;
@@ -322,8 +336,16 @@ class DecimalInput extends Component {
     selectionStart = separated.selectionStart;
     selectionEnd = selectionStart;
 
-    const value = Number(this.stripThousandSeparator(mapToLatin(valueToShow)));
-    const valueIsValid = (typeof value === 'number' || value === undefined || value === null);
+    let value = this.stripThousandSeparator(mapToLatin(valueToShow));
+    let valueIsValid;
+    if(asString) {
+      const checkValue = Number(value);
+      valueIsValid = (typeof checkValue === 'number' || checkValue === undefined || checkValue === null);
+    }else{
+      value = Number(value);
+      valueIsValid = (typeof value === 'number' || value === undefined || value === null);
+    }
+
 
     return {
       value,
@@ -401,7 +423,7 @@ class DecimalInput extends Component {
   }
 
   render() {
-    const {value, onChange, onInput, onPast, onKeyDown, pattern, inputMode, type, ref, inputRef, getInputRef, numberFormat, defaultValue, ...rest} = this.props;
+    const {value, onChange, onInput, onPast, onKeyDown, pattern, inputMode, type, ref, inputRef, getInputRef, numberFormat, defaultValue, asString, ...rest} = this.props;
     const {valueToShow} = this.values;
 
     // const localInputMode = this.props.type === 'tel' ? 'tel' : 'numeric'; // as we use type=tel, then we do not need it any more

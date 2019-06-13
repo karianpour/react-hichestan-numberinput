@@ -7,7 +7,7 @@ class Example extends Component {
   state = {
     Number1: '',
     Number2: '123',
-    Number3: 0,
+    Number3: '0',
     color: false,
     bgColor: false,
     Tel1: '0912',
@@ -97,7 +97,7 @@ class Example extends Component {
           <label>
             عدد اعشاری
             <br/>
-            <DecimalInput name="Number3" className={className} style={style} value={this.state.Number3} numberFormat={NUMBER_FORMAT_FARSI} onChange={this.handleChange} placeholder="type/paste a number" />
+            <DecimalInput name="Number3" className={className} style={style} value={this.state.Number3} asString={true} numberFormat={NUMBER_FORMAT_FARSI} onChange={this.handleChange} placeholder="type/paste a number" />
           </label>
         </div>
         <label>خروجی
