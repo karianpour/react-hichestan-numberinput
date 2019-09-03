@@ -106,7 +106,9 @@ class DecimalInput extends Component {
 
   handleKeyDown = (event) => {
     // console.log('keyCode: ', event.keyCode, 'key: ', event.key);
-    if(event.keyCode===8) { //backspace
+    if(this.props.disabled || this.props.readOnly) {
+      event.preventDefault();
+    }else if(event.keyCode===8) { //backspace
       event.preventDefault();
       this.updateState(this.deleteValue(event.target, -1, this.props.asString));
     }else if(event.keyCode===46){ //delete
@@ -155,6 +157,7 @@ class DecimalInput extends Component {
 
   handlePaste = (event) => {
     event.preventDefault();
+    if(this.props.disabled || this.props.readOnly) return;
 
     let enteredValue = this.stripAnyThingButNumber((event.clipboardData || window.clipboardData).getData('text'));
     if(this.values.valueToShow!==''){
@@ -166,6 +169,7 @@ class DecimalInput extends Component {
 
   handleInput = (event) => {
     if(this.values.valueToShow===event.target.value) return;
+    if(this.props.disabled || this.props.readOnly) return;
 
     const enteredValue = this.stripAnyThingButNumber(event.target.value);
 
@@ -418,6 +422,12 @@ class DecimalInput extends Component {
     }
     if(nextProps.className !== this.props.className){
       this.inputRef.current.className = nextProps.className;
+    }
+    if(nextProps.disabled !== this.props.disabled){
+      this.inputRef.current.disabled = nextProps.disabled;
+    }
+    if(nextProps.readOnly !== this.props.readOnly){
+      this.inputRef.current.readOnly = nextProps.readOnly;
     }
     return false;
   }

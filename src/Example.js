@@ -10,13 +10,15 @@ class Example extends Component {
     Number3: '0',
     color: false,
     bgColor: false,
+    disabled: false,
+    readOnly: false,
     Tel1: '0912',
     value1: '',
   };
 
   componentDidMount(){
-    this.interval = setInterval(this.toggleBgColor, 6000);
-    this.interval = setInterval(this.toggleColor, 3000);
+    // this.interval = setInterval(this.toggleBgColor, 6000);
+    // this.interval = setInterval(this.toggleColor, 3000);
   }
 
   componentWillUnmount(){
@@ -55,9 +57,22 @@ class Example extends Component {
     })
   };
 
+  toggleDisabled = () => {
+    this.setState({
+      disabled: !this.state.disabled,
+    })
+  };
+
+  toggleReadOnly = () => {
+    this.setState({
+      readOnly: !this.state.readOnly,
+    })
+  };
+
   render(){
     const className = this.state.color ? "red" : "";
     const style = this.state.bgColor ? {backgroundColor: 'aqua'} : {};
+    const {disabled, readOnly} = this.state;
 
 
     return (
@@ -75,7 +90,7 @@ class Example extends Component {
           <label>
             نمونه فارسی
             <br/>
-            <NumberInput name="Number1" className={className} style={style} value={this.state.Number1} onChange={this.handleChange} placeholder="type/paste a number" />
+            <NumberInput name="Number1" disabled={disabled} readOnly={readOnly} className={className} style={style} value={this.state.Number1} onChange={this.handleChange} placeholder="type/paste a number" />
           </label>
         </div>
         <br/>
@@ -83,7 +98,7 @@ class Example extends Component {
           <label>
             نمونه لاتین
             <br/>
-            <NumberInput name="Number2" className={className} style={style} value={this.state.Number2} numberFormat={NUMBER_FORMAT_LATIN} onChange={this.handleChange} placeholder="type/paste a number" />
+            <NumberInput name="Number2" disabled={disabled} readOnly={readOnly} className={className} style={style} value={this.state.Number2} numberFormat={NUMBER_FORMAT_LATIN} onChange={this.handleChange} placeholder="type/paste a number" />
           </label>
         </div>
         <label>خروجی
@@ -97,7 +112,7 @@ class Example extends Component {
           <label>
             عدد اعشاری
             <br/>
-            <DecimalInput name="Number3" className={className} style={style} value={this.state.Number3} asString={true} numberFormat={NUMBER_FORMAT_FARSI} onChange={this.handleChange} placeholder="type/paste a number" />
+            <DecimalInput name="Number3" disabled={disabled} readOnly={readOnly} className={className} style={style} value={this.state.Number3} asString={true} numberFormat={NUMBER_FORMAT_FARSI} onChange={this.handleChange} placeholder="type/paste a number" />
           </label>
         </div>
         <label>خروجی
@@ -110,7 +125,7 @@ class Example extends Component {
           <label>
             نمونه تلفن فارسی
             <br/>
-            <NumberInput type="tel" name="Tel1" className={className} style={style} value={this.state.Tel1} onChange={this.handleChange} maxLength={12} placeholder="type/paste a number" />
+            <NumberInput type="tel" name="Tel1" disabled={disabled} readOnly={readOnly} className={className} style={style} value={this.state.Tel1} onChange={this.handleChange} maxLength={12} placeholder="type/paste a number" />
           </label>
         </div>
         <br/>
@@ -118,6 +133,8 @@ class Example extends Component {
             <br/>
             <CardNumberInput
               value={this.state.value1}
+              disabled={disabled}
+              readOnly={readOnly}
               name={'value1'}
               className={className} 
               style={style} 
@@ -130,8 +147,10 @@ class Example extends Component {
           </label>
           <br/>
         <br/>
-        <button onClick={this.toggleColor}>toggle className</button>
-        <button onClick={this.toggleBgColor}>toggle style</button>
+        <button type="button" onClick={this.toggleColor}>toggle className</button>
+        <button type="button" onClick={this.toggleBgColor}>toggle style</button>
+        <button type="button" onClick={this.toggleDisabled}>{disabled?'enable':'disable'}</button>
+        <button type="button" onClick={this.toggleReadOnly}>{readOnly?'writable':'read only'}</button>
         <input type="submit"/>
         </form>
       </React.Fragment>
