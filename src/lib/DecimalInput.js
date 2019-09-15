@@ -63,6 +63,14 @@ class DecimalInput extends Component {
      * makes the value string, it is useful for big decimals.
      */
     asString: PropTypes.bool,
+    /**
+     * max digits before decimal separator.
+     */
+    maxDigits: PropTypes.number,
+    /**
+     * max digits after decimal separator.
+     */
+    maxDecimal: PropTypes.number,
   };
 
   constructor(props) {
@@ -91,8 +99,8 @@ class DecimalInput extends Component {
   };
 
   readValuesFromProps = (props) => {
-    if(props.value){
-      const value = props.value ? props.asString ? props.value : Number(props.value) : undefined;
+    if(props.value || props.value===0){
+      const value = props.value.toString();
       return this.updateValue('', 0, 0, value, props.numberFormat, props.asString);
     }
 
@@ -126,9 +134,11 @@ class DecimalInput extends Component {
       event.preventDefault();
       // console.log('digit');
       this.updateState(this.updateElementValue(event.target, event.key, this.props.numberFormat, this.props.asString));
-    }else if(event.key==='.' || event.keyCode===190){ //point
+    }else if(event.key===this.decimalSeparator || event.keyCode===190){ //point
       event.preventDefault();
-      this.updateState(this.updateElementValue(event.target, '.', this.props.numberFormat, this.props.asString));
+      if(this.props.maxDecimal===null || this.props.maxDecimal===undefined || this.props.maxDecimal > 0){
+        this.updateState(this.updateElementValue(event.target, this.decimalSeparator, this.props.numberFormat, this.props.asString));
+      }
     }else if(event.key==='-' || event.keyCode===189){ // -
       event.preventDefault();
       this.updateState(this.negate());
@@ -259,6 +269,12 @@ class DecimalInput extends Component {
   updateValue = (currentValue, selectionStart, selectionEnd, enteredValue, numberFormat, asString) => {
     const enteredValueMapped = this.mapDecimalSeparator(this.mapValue(enteredValue, numberFormat));
     let valueToShow = currentValue;
+    if(enteredValueMapped===this.decimalSeparator){
+      const i = valueToShow.indexOf(this.decimalSeparator);
+      if(i>-1){
+        return;
+      }
+    }
 
     let valueBeforeCursor = valueToShow.substring(0, selectionStart);
     let valueAfterCursor = valueToShow.substring(selectionEnd);
@@ -269,6 +285,38 @@ class DecimalInput extends Component {
 
     valueToShow = valueBeforeCursor + enteredValueMapped + valueAfterCursor;
     selectionStart += enteredValueMapped.length;
+
+    if(typeof this.props.maxDecimal === 'number'){
+      const i = valueToShow.indexOf(this.decimalSeparator);
+      if(i>-1){
+        const decimalLength = valueToShow.length - i - 1;
+        if(decimalLength > this.props.maxDecimal){
+          valueToShow = valueToShow.substring(0, i + 1 + this.props.maxDecimal);
+          if(selectionStart>valueToShow.length) selectionStart = valueToShow.length;
+        }
+      }
+    }
+    {
+      const latinNumber = mapToLatin(valueToShow);
+      const i = this.firstNonZeroDigit(latinNumber, 0);
+      if(i > 0 && valueToShow.length>1){
+        valueToShow = valueToShow.substring(i);
+        selectionStart -= i;
+      }
+    }
+    if(typeof this.props.maxDigits === 'number'){
+      const i = valueToShow.indexOf(this.decimalSeparator);
+      const digitsLength = i>-1 ? i : valueToShow.length;
+      if(digitsLength > this.props.maxDigits){
+        if(i===-1){
+          valueToShow = valueToShow.substring(0, this.props.maxDigits);
+          if(selectionStart>valueToShow.length) selectionStart = valueToShow.length;
+        }else{
+          valueToShow = valueToShow.substring(0, this.props.maxDigits) + (i===-1 ? '' : valueToShow.substring(i));
+          if(selectionStart>this.props.maxDigits) selectionStart = this.props.maxDigits;
+        }
+      }
+    }
 
     const separated = this.addThousandSeparator(valueToShow, selectionStart);
     valueToShow = separated.valueToShowWithSeparator;
@@ -394,6 +442,11 @@ class DecimalInput extends Component {
     return {valueToShowWithSeparator, selectionStart};
   };
 
+  firstNonZeroDigit = (value, i) => {
+    if(value.charAt(i)==='0') return this.firstNonZeroDigit(value, i+1);
+    return i;
+  };
+
   countThousandSeparator = (value) => {
     return (value.match(this.thousandSeparatorRegex) || []).length;
   };
@@ -433,7 +486,7 @@ class DecimalInput extends Component {
   }
 
   render() {
-    const {value, onChange, onInput, onPast, onKeyDown, pattern, inputMode, type, ref, inputRef, getInputRef, numberFormat, defaultValue, asString, ...rest} = this.props;
+    const {value, onChange, onInput, onPast, onKeyDown, pattern, inputMode, type, ref, inputRef, getInputRef, numberFormat, defaultValue, asString, maxDecimal, maxDigits, ...rest} = this.props;
     const {valueToShow} = this.values;
 
     // const localInputMode = this.props.type === 'tel' ? 'tel' : 'numeric'; // as we use type=tel, then we do not need it any more
