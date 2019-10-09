@@ -291,7 +291,7 @@ class DecimalInput extends Component {
       if(i>-1){
         const decimalLength = valueToShow.length - i - 1;
         if(decimalLength > this.props.maxDecimal){
-          valueToShow = valueToShow.substring(0, i + 1 + this.props.maxDecimal);
+          valueToShow = valueToShow.substring(0, i + (this.props.maxDecimal? 1 : 0) + this.props.maxDecimal);
           if(selectionStart>valueToShow.length) selectionStart = valueToShow.length;
         }
       }

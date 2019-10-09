@@ -7,7 +7,7 @@ class Example extends Component {
   state = {
     Number1: '',
     Number2: '123',
-    Number3: 0,
+    Number3: 1200.246,
     color: false,
     bgColor: false,
     disabled: false,
