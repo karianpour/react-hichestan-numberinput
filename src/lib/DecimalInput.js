@@ -302,6 +302,9 @@ class DecimalInput extends Component {
       if(i > 0 && valueToShow.length>1){
         valueToShow = valueToShow.substring(i);
         selectionStart -= i;
+      }else if(i===0 && latinNumber.charAt(0)==='.'){
+        valueToShow = this.mapValue('0', numberFormat) + valueToShow;
+        selectionStart++;
       }
     }
     if(typeof this.props.maxDigits === 'number'){
@@ -443,6 +446,11 @@ class DecimalInput extends Component {
   };
 
   firstNonZeroDigit = (value, i) => {
+    if(value.charAt(i)===this.decimalSeparator) {
+      if(i>0)
+        return i - 1;
+      else return i;
+    }
     if(value.charAt(i)==='0') return this.firstNonZeroDigit(value, i+1);
     return i;
   };
