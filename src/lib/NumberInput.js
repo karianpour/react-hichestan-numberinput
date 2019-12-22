@@ -151,7 +151,7 @@ class NumberInput extends Component {
   };
 
 
-  updateState = (newState, forceFireChange) => {
+  updateState = (newState, forceFireChange, noFireOnChange) => {
     if(!newState) return;
 
     this.values = newState;
@@ -167,7 +167,9 @@ class NumberInput extends Component {
       // console.log('has not focus :(');
     }
     if(fireOnChangeInTheEnd || forceFireChange){
-      this.fireOnChange();
+      if(!noFireOnChange){
+        this.fireOnChange();
+      }
     }
   };
 
@@ -251,7 +253,7 @@ class NumberInput extends Component {
 
   shouldComponentUpdate(nextProps, nextState){
     if(nextProps.value !== this.values.value || nextProps.numberFormat !== this.props.numberFormat){
-      this.updateState(this.readValuesFromProps(nextProps));
+      this.updateState(this.readValuesFromProps(nextProps), false, true);
     }
     if(!shallowEqualObjects(nextProps.style, this.props.style)){
       return true;

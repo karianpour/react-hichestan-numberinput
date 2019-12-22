@@ -285,7 +285,7 @@ class CardNumberInput extends Component {
   };
 
 
-  updateState = (newState) => {
+  updateState = (newState, noFireOnChange) => {
     if(!newState) return;
 
     this.values = newState;
@@ -307,7 +307,9 @@ class CardNumberInput extends Component {
       // console.log('has not focus :(');
     }
     if(fireOnChangeInTheEnd){
-      this.fireOnChange();
+      if(!noFireOnChange){
+        this.fireOnChange();
+      }
     }
   };
 
@@ -452,7 +454,7 @@ class CardNumberInput extends Component {
 
   shouldComponentUpdate(nextProps, nextState){
     if(nextProps.value !== this.values.value || nextProps.numberFormat !== this.props.numberFormat){
-      this.updateState(this.readValues(nextProps.value));
+      this.updateState(this.readValues(nextProps.value), true);
     }
     if(!shallowEqualObjects(nextProps.style, this.props.style)){
       return true;
