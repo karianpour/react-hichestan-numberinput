@@ -211,6 +211,7 @@ class CardNumberInput extends Component {
     }else if((event.ctrlKey || event.metaKey) && (event.keyCode===82)){ //refresh key
     }else if((event.ctrlKey || event.metaKey) && (event.keyCode===73)){ //inspector
     }else if((event.ctrlKey || event.metaKey) && (event.keyCode===65)){ //select all
+    }else if((event.ctrlKey || event.metaKey) && (event.keyCode===76)){ //location focus
     }else if(event.keyCode===115){ // F4
       if(this.props.onShowDialog) {
         event.preventDefault();

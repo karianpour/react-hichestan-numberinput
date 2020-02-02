@@ -151,6 +151,7 @@ class DecimalInput extends Component {
     }else if((event.ctrlKey || event.metaKey) && (event.keyCode===82)){ //refresh key
     }else if((event.ctrlKey || event.metaKey) && (event.keyCode===73)){ //inspector
     }else if((event.ctrlKey || event.metaKey) && (event.keyCode===65)){ //select all
+    }else if((event.ctrlKey || event.metaKey) && (event.keyCode===76)){ //location focus
     }else if(event.keyCode>=112 && event.keyCode<=123){ // All other F keys
     }else if(event.keyCode===229){ //android bug workaround
     }else{
