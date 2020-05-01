@@ -5,8 +5,8 @@ import './Example.css';
 
 class Example extends Component {
   state = {
-    Number1: '',
-    Number2: '123',
+    Number1: '123',
+    Number2: '',
     Number3: 1200.246,
     color: false,
     bgColor: false,

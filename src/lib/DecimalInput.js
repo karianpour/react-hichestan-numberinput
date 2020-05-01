@@ -82,7 +82,7 @@ class DecimalInput extends Component {
     this.inputRef = ref ? ref : React.createRef();
     // this.rr = React.createRef();
 
-    this.thousandSeparator = props.thousandSeparator || this.defaultThousandSeparator();
+    this.thousandSeparator = props.thousandSeparator === '' ? '' : props.thousandSeparator || this.defaultThousandSeparator();
     this.decimalSeparator = props.decimalSeparator || this.defaultDecimalSeparator();
     this.thousandSeparatorRegex = new RegExp(`[${this.thousandSeparator}]`, 'g');
     this.decimalSeparatorRegex = new RegExp(`[.${this.decimalSeparator}]`, 'g');
@@ -416,6 +416,8 @@ class DecimalInput extends Component {
 
 
   addThousandSeparator = (valueToShow, selectionStart) => {
+    if(this.thousandSeparator==='')
+      return {valueToShowWithSeparator: valueToShow, selectionStart};
     let valueToShowWithSeparator = '';
     let alreadFoundDecimalSeparator = false;
     let alreadyPassedDecimalSeparator = valueToShow.indexOf(this.decimalSeparator) === -1;
@@ -459,11 +461,11 @@ class DecimalInput extends Component {
   };
 
   countThousandSeparator = (value) => {
-    return (value.match(this.thousandSeparatorRegex) || []).length;
+    return this.thousandSeparator === '' ? 0 : (value.match(this.thousandSeparatorRegex) || []).length;
   };
 
   stripThousandSeparator = (value) => {
-    return value.replace(this.thousandSeparatorRegex, '');
+    return this.thousandSeparator === '' ? value : value.replace(this.thousandSeparatorRegex, '');
   };
 
   stripAnyThingButNumber = (str) => {
@@ -497,7 +499,7 @@ class DecimalInput extends Component {
   }
 
   render() {
-    const {value, onChange, onInput, onPast, onKeyDown, pattern, inputMode, type, ref, inputRef, getInputRef, numberFormat, defaultValue, asString, maxDecimal, maxDigits, ...rest} = this.props;
+    const {value, onChange, onInput, onPast, onKeyDown, pattern, inputMode, type, ref, inputRef, getInputRef, numberFormat, defaultValue, asString, maxDecimal, maxDigits, thousandSeparator, decimalSeparator, ...rest} = this.props;
     const {valueToShow} = this.values;
 
     // const localInputMode = this.props.type === 'tel' ? 'tel' : 'numeric'; // as we use type=tel, then we do not need it any more
