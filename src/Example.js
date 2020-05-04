@@ -16,6 +16,11 @@ class Example extends Component {
     value1: '',
   };
 
+  constructor(){
+    super();
+    this.spanRef = React.createRef();
+  }
+
   componentDidMount(){
     // this.interval = setInterval(this.toggleBgColor, 6000);
     // this.interval = setInterval(this.toggleColor, 3000);
@@ -74,10 +79,15 @@ class Example extends Component {
     const style = this.state.bgColor ? {backgroundColor: 'aqua'} : {};
     const {disabled, readOnly} = this.state;
 
+    const showKeyCode = (e) => {
+      console.log(e.charCode)
+      this.spanRef.current.innerHTML = e.charCode.toString();
+    }
+
 
     return (
       <React.Fragment>
-        <form autoComplete="on">
+        <form autoComplete="on" onKeyPress={showKeyCode}>
         <div>
           <br/>
           <br/>
@@ -153,6 +163,7 @@ class Example extends Component {
         <button type="button" onClick={this.toggleReadOnly}>{readOnly?'writable':'read only'}</button>
         <input type="submit"/>
         </form>
+        <span ref={this.spanRef}></span>
       </React.Fragment>
     );
   }
