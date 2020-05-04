@@ -130,7 +130,7 @@ class DecimalInput extends Component {
       event.preventDefault();
       // console.log('digit');
       this.updateState(this.updateElementValue(event.target, (event.keyCode - 96).toString(), this.props.numberFormat, this.props.asString));
-    }else if(event.key>='۰' && event.key<='۹'){ //digits
+    }else if((event.key>='۰' && event.key<='۹') || (event.key>='٠' && event.key<='٩')){ //digits
       event.preventDefault();
       // console.log('digit');
       this.updateState(this.updateElementValue(event.target, event.key, this.props.numberFormat, this.props.asString));
@@ -146,7 +146,7 @@ class DecimalInput extends Component {
     }else if(event.keyCode===9){ //tab
     }else if(event.keyCode===13){ //return
       this.hideKeyboard();
-    }else if((event.ctrlKey || event.metaKey) && (event.keyCode===67 || event.keyCode===86)){ //copy/paste
+    }else if((event.ctrlKey || event.metaKey) && (event.keyCode===67 || event.keyCode===86 || event.keyCode===88)){ //copy/paste/cut
     }else if((event.ctrlKey || event.metaKey) && (event.keyCode===82)){ //refresh key
     }else if((event.ctrlKey || event.metaKey) && (event.keyCode===82)){ //refresh key
     }else if((event.ctrlKey || event.metaKey) && (event.keyCode===73)){ //inspector

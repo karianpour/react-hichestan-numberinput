@@ -5,7 +5,7 @@ import Example from './Example';
 const App = () => (
   <div dir={"rtl"} style={{ margin: "35px auto", padding: 25 }}>
     <h1>کمپننت عدد</h1>
-    <br/>ورژن ۱،۰ ساخت ۱۱
+    <br/>ورژن ۱،۰ ساخت ۱۲
     <ul>
       <li>نمایش عدد فارسی یا لاتین</li>
       <li>ذخیره عدد لاتین، باعث میشود که داده صحیح به سرور داده شود</li>
