@@ -80,8 +80,7 @@ class Example extends Component {
     const {disabled, readOnly} = this.state;
 
     const showKeyCode = (e) => {
-      console.log(e.charCode)
-      this.spanRef.current.innerHTML = e.charCode.toString();
+      this.spanRef.current.innerHTML = 'Key Code: ' + e.charCode.toString();
     }
 
 
@@ -153,7 +152,7 @@ class Example extends Component {
             <br/>
             خروجی
             <br/>
-            <input type="text" name="value1" dir={'ltr'} value={this.state.value1} onChange={this.handleChange}/>
+            <input type="tel" name="value1" dir={'ltr'} value={this.state.value1} onChange={this.handleChange}/>
           </label>
           <br/>
         <br/>

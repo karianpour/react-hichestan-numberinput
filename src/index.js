@@ -3,7 +3,7 @@ import { render } from "react-dom";
 import Example from './Example';
 
 const App = () => (
-  <div dir={"rtl"} style={{ width: 640, margin: "15px auto" }}>
+  <div dir={"rtl"} style={{ margin: "35px auto", padding: 25 }}>
     <h1>کمپننت عدد</h1>
     <br/>ورژن ۱،۰ ساخت ۱۱
     <ul>
