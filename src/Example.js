@@ -14,6 +14,7 @@ class Example extends Component {
     readOnly: false,
     Tel1: '0912',
     value1: '',
+    placeholder: 'type/paste a number',
   };
 
   constructor(){
@@ -74,10 +75,16 @@ class Example extends Component {
     })
   };
 
+  togglePlaceholder = () => {
+    this.setState({
+      placeholder: 'پیست یا تایپ کنید',
+    })
+  };
+
   render(){
     const className = this.state.color ? "red" : "";
     const style = this.state.bgColor ? {backgroundColor: 'aqua'} : {};
-    const {disabled, readOnly} = this.state;
+    const {disabled, readOnly, placeholder} = this.state;
 
     const showKeyCode = (e) => {
       this.spanRef.current.innerHTML = 'Key Code: ' + e.charCode.toString();
@@ -99,7 +106,7 @@ class Example extends Component {
           <label>
             نمونه فارسی
             <br/>
-            <NumberInput name="Number1" disabled={disabled} readOnly={readOnly} className={className} style={style} value={this.state.Number1} onChange={this.handleChange} placeholder="type/paste a number" />
+            <NumberInput name="Number1" disabled={disabled} readOnly={readOnly} className={className} style={style} value={this.state.Number1} onChange={this.handleChange} placeholder={placeholder} />
           </label>
         </div>
         <br/>
@@ -160,6 +167,7 @@ class Example extends Component {
         <button type="button" onClick={this.toggleBgColor}>toggle style</button>
         <button type="button" onClick={this.toggleDisabled}>{disabled?'enable':'disable'}</button>
         <button type="button" onClick={this.toggleReadOnly}>{readOnly?'writable':'read only'}</button>
+        <button type="button" onClick={this.togglePlaceholder}>{'change place holder'}</button>
         <input type="submit"/>
         </form>
         <span ref={this.spanRef}></span>
