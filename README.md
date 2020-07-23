@@ -21,6 +21,7 @@ Here you can experience a live [demo](https://karianpour.github.io/react-hichest
 - Showing tel keypad if type='tel'
 - maxLength property to control maxumun acceptable number of digits
 - typeScript friendly (type are not complete yet but it works)
+- Create-React-App and NextJs compatible
 
 ## Installation
 
@@ -32,15 +33,58 @@ see the example
 ## Material-ui
 
 If you happened to use it with material-ui v3, this is the way I used it :
-```
-import TextField from '@material-ui/core/TextField';
-import { NumberInput } from 'react-hichestan-numberinput';
+```tsx
+import React from 'react';
+import { TextField, TextFieldProps } from '@material-ui/core';
+import { DecimalInput, NumberInput } from 'react-hichestan-numberinput';
 
+export const MaterialDecimalField = ({
+  value,
+  inputProps,
+  ...props
+}:({inputProps?: any} & TextFieldProps)) => {
+  if(value === undefined || value === null){
+    value = '';
+  }
+
+  // a bug in material-ui, it should be done by them
+  const shrink = !!value || value===0;
+
+  return (
     <TextField
+      value={value}
+      {...props}
+      InputLabelProps={shrink ? {shrink} : {}}
+      InputProps={{
+        inputComponent: DecimalInput,
+        inputProps,
+      }}
+    />
+)};
+
+export const MaterialNumberField = ({
+  value,
+  inputProps,
+  ...props
+}:({inputProps?: any} & TextFieldProps)) => {
+  if(value === undefined || value === null){
+    value = '';
+  }
+
+  // a bug in material-ui, it should be done by them
+  const shrink = !!value || value===0;
+
+  return (
+    <TextField
+      value={value}
+      {...props}
+      InputLabelProps={shrink ? {shrink} : {}}
       InputProps={{
         inputComponent: NumberInput,
-        inputProps: {maxLength: 12},
+        inputProps,
       }}
+    />
+)};
 ```
 
 ### number formats

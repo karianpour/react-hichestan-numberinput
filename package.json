@@ -1,6 +1,6 @@
 {
   "name": "react-hichestan-numberinput",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "A serie of react components to numbers in input specially persian numbers.",
   "author": "Hichestan",
   "copyright.owner": "Hichestan Corp.",
@@ -34,9 +34,10 @@
     "@babel/runtime": "^7.9.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.10.1",
-    "@babel/core": "^7.10.2",
-    "@babel/preset-react": "^7.10.1",
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.10.5",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/preset-react": "^7.10.4",
     "babel-preset-react-app": "^9.1.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
