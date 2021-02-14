@@ -1,4 +1,5 @@
-export const NUMBER_FORMAT_FARSI: string;
+export const NUMBER_FORMAT_FARSI: "FARSI";
 
-export const NUMBER_FORMAT_LATIN: string;
+export const NUMBER_FORMAT_LATIN: "LATIN";
 
+export type NumberFormat = NUMBER_FORMAT_FARSI | NUMBER_FORMAT_LATIN;
