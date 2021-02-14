@@ -25,5 +25,5 @@ export type DecimalInputProps = {
 ) &
   React.ComponentProps<"input">;
 
-declare const DecimalInput: React.FC<HTMLInputElementProps & DecimalInputProps>;
+declare const DecimalInput: React.FC<DecimalInputProps>;
 export default DecimalInput;
