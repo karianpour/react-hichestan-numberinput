@@ -94,8 +94,8 @@ class CardNumberInput extends Component {
 
   }
     
-  readValues = (value) => {
-    const valueToShow = this.mapValue(value, this.props.numberFormat);
+  readValues = (value, numberFormat) => {
+    const valueToShow = this.mapValue(value, numberFormat || this.props.numberFormat);
     const valueIsValid = this.isValueValidCardNumber(value);
 
     return {
@@ -455,7 +455,7 @@ class CardNumberInput extends Component {
 
   shouldComponentUpdate(nextProps, nextState){
     if(nextProps.value !== this.values.value || nextProps.numberFormat !== this.props.numberFormat){
-      this.updateState(this.readValues(nextProps.value), true);
+      this.updateState(this.readValues(nextProps.value, nextProps.numberFormat), true);
     }
     if(!shallowEqualObjects(nextProps.style, this.props.style)){
       return true;

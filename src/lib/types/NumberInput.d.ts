@@ -7,20 +7,10 @@ export type NumberInputProps = {
   getInputRef?: any;
   disabled?: boolean;
   readOnly?: boolean;
-  thousandSeparator?: string;
-} & (
-  | {
-      onChange?: (event: { target: { name: string; value: string } }) => void;
-      value?: string;
-      asString?: true;
-    }
-  | {
-      onChange?: (event: { target: { name: string; value: number } }) => void;
-      value?: number;
-      asString?: false;
-    }
-) &
-  React.ComponentProps<"input">;
+  maxLength?: number;
+  onChange?: (event: { target: { name: string; value: string } }) => void;
+  value?: string;
+} & React.ComponentProps<"input">;
 
-declare const NumberInput: React.FC<HTMLInputElementProps & NumberInputProps>;
+declare const NumberInput: React.FC<NumberInputProps>;
 export default NumberInput;
