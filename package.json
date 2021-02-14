@@ -1,6 +1,6 @@
 {
   "name": "react-hichestan-numberinput",
-  "version": "2.0.18",
+  "version": "2.0.19",
   "description": "A serie of react components to numbers in input specially persian numbers.",
   "author": "Hichestan",
   "copyright.owner": "Hichestan Corp.",
@@ -29,9 +29,9 @@
     "build": "rimraf dist && NODE_ENV=production babel src/lib --out-dir dist --copy-files --ignore __tests__,spec.js,test.js,__snapshots__"
   },
   "peerDependencies": {
+    "@babel/runtime": "^7.9.0",
     "react": "^16.9.0",
-    "react-dom": "^16.9.0",
-    "@babel/runtime": "^7.9.0"
+    "react-dom": "^16.9.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.16",
