@@ -5,12 +5,14 @@ A persian number input.
 The component is compatible with react 16.
 The component is controlled, so the component code is imperative. We need that to manipulate the input data entry behavior.
 
-
 ## Demo
 
 Here you can experience a live [demo](https://karianpour.github.io/react-hichestan-numberinput/)
 
+[sandbox sample form material UI](https://codesandbox.io/s/mystifying-field-x40en?fontsize=14&hidenavigation=1&theme=dark)
+
 ### Features
+
 - Show farsi digits
 - The value is latin digit (suitable for backend data storage)
 - Number keypad on mobile devices (Samsung browser is not supported)
@@ -28,90 +30,97 @@ Here you can experience a live [demo](https://karianpour.github.io/react-hichest
 Use `npm i react-hichestan-numberinput` in order to install the module.
 
 ## Usage
+
 see the example
 
 ## Material-ui
 
 If you happened to use it with material-ui v3, this is the way I used it :
+
 ```tsx
-import React from 'react';
-import { TextField, TextFieldProps } from '@material-ui/core';
-import { DecimalInput, NumberInput } from 'react-hichestan-numberinput';
+import React from "react";
+import { TextField, TextFieldProps } from "@material-ui/core";
+import { DecimalInput, NumberInput } from "react-hichestan-numberinput";
 
 export const MaterialDecimalField = ({
   value,
   inputProps,
   ...props
-}:({inputProps?: any} & TextFieldProps)) => {
-  if(value === undefined || value === null){
-    value = '';
+}: { inputProps?: any } & TextFieldProps) => {
+  if (value === undefined || value === null) {
+    value = "";
   }
 
   // a bug in material-ui, it should be done by them
-  const shrink = !!value || value===0;
+  const shrink = !!value || value === 0;
 
   return (
     <TextField
       value={value}
       {...props}
-      InputLabelProps={shrink ? {shrink} : {}}
+      InputLabelProps={shrink ? { shrink } : {}}
       InputProps={{
         inputComponent: DecimalInput,
         inputProps,
       }}
     />
-)};
+  );
+};
 
 export const MaterialNumberField = ({
   value,
   inputProps,
   ...props
-}:({inputProps?: any} & TextFieldProps)) => {
-  if(value === undefined || value === null){
-    value = '';
+}: { inputProps?: any } & TextFieldProps) => {
+  if (value === undefined || value === null) {
+    value = "";
   }
 
   // a bug in material-ui, it should be done by them
-  const shrink = !!value || value===0;
+  const shrink = !!value || value === 0;
 
   return (
     <TextField
       value={value}
       {...props}
-      InputLabelProps={shrink ? {shrink} : {}}
+      InputLabelProps={shrink ? { shrink } : {}}
       InputProps={{
         inputComponent: NumberInput,
         inputProps,
       }}
     />
-)};
+  );
+};
 ```
 
 ### number formats
+
 'FARSI' / 'LATIN'
 
-
-
 ### Contribution
+
 Feel free to fork and add some feature. If you have time to do improvement on the U/I that will be appreciated.
 If some one for any reason wants to sand the date and time format in any other format than ISO 8601, we need to inject a date and time formatter into the component.
 
 To start, make a clone and run:
+
 ```bash
 npm install
 npm start
 ```
+
 and browse [http://localhost:3000](http://localhost:3000)
 
 For publishing
+
 ```bash
 ./build-examples.sh
 npm run build
 npm publish
 ```
 
-
 ### Acknowledgement
+
 The project is bootstrapped by create-component-lib.
 
 ### License
