@@ -1,6 +1,5 @@
 import * as React from "react";
-
-export type NumberFormat = "LATIN" | "FARSI";
+import { NumberFormat } from "./util";
 
 export type NumberInputProps = {
   numberFormat?: NumberFormat;

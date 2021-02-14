@@ -1,7 +1,5 @@
 import * as React from "react";
-declare const CardNumberInput: React.FC<
-  HTMLInputElementProps & CardNumberProps
->;
+import { NumberFormat } from "./util";
 
 export type CardNumberProps = {
   numberFormat?: NumberFormat;

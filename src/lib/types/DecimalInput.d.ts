@@ -1,4 +1,5 @@
 import * as React from "react";
+import { NumberFormat } from "./util";
 
 export type DecimalInputProps = {
   numberFormat?: NumberFormat;
