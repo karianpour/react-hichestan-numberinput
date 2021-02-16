@@ -9,7 +9,7 @@ The component is controlled, so the component code is imperative. We need that t
 
 Here you can experience a live [demo](https://karianpour.github.io/react-hichestan-numberinput/)
 
-[sandbox sample form material UI](https://codesandbox.io/s/mystifying-field-x40en?fontsize=14&hidenavigation=1&theme=dark)
+[Sandbox sample for Material-UI](https://codesandbox.io/s/mystifying-field-x40en?fontsize=14&hidenavigation=1&theme=dark)
 
 ### Features
 
@@ -40,13 +40,13 @@ If you happened to use it with material-ui v3, this is the way I used it :
 ```tsx
 import React from "react";
 import { TextField, TextFieldProps } from "@material-ui/core";
-import { DecimalInput, NumberInput } from "react-hichestan-numberinput";
+import { DecimalInput, NumberInput, DecimalInputProps, NumberInputProps } from "react-hichestan-numberinput";
 
 export const MaterialDecimalField = ({
   value,
   inputProps,
   ...props
-}: { inputProps?: any } & TextFieldProps) => {
+}: { inputProps?: DecimalInputProps } & TextFieldProps) => {
   if (value === undefined || value === null) {
     value = "";
   }
@@ -71,7 +71,7 @@ export const MaterialNumberField = ({
   value,
   inputProps,
   ...props
-}: { inputProps?: any } & TextFieldProps) => {
+}: { inputProps?: NumberInputProps } & TextFieldProps) => {
   if (value === undefined || value === null) {
     value = "";
   }

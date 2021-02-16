@@ -1,6 +1,7 @@
 import * as React from "react";
 import { NumberFormat } from "./util";
 
+
 export type NumberInputProps = {
   numberFormat?: NumberFormat;
   inputRef?: any;
@@ -8,8 +9,6 @@ export type NumberInputProps = {
   disabled?: boolean;
   readOnly?: boolean;
   maxLength?: number;
-  onChange?: (event: { target: { name: string; value: string } }) => void;
-  value?: string;
 } & React.ComponentProps<"input">;
 
 declare const NumberInput: React.FC<NumberInputProps>;

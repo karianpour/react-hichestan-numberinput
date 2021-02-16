@@ -1,7 +1,7 @@
 import * as React from "react";
 import { NumberFormat } from "./util";
 
-export type CardNumberProps = {
+export type CardNumberInputProps = {
   numberFormat?: NumberFormat;
   inputRef?: any;
   getInputRef?: any;
@@ -9,5 +9,5 @@ export type CardNumberProps = {
   readOnly?: boolean;
 } & React.ComponentProps<"input">;
 
-declare const CardNumberInput: React.FC<CardNumberProps>;
+declare const CardNumberInput: React.FC<CardNumberInputProps>;
 export default CardNumberInput;

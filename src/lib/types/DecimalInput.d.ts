@@ -1,5 +1,13 @@
 import * as React from "react";
+import { ChangeEvent } from "react";
 import { NumberFormat } from "./util";
+
+interface NumberEventType extends ChangeEvent<HTMLInputElement> {
+  target: EventTarget & HTMLInputElement & { value: number };
+}
+interface StringEventType extends ChangeEvent<HTMLInputElement> {
+  target: EventTarget & HTMLInputElement & { value: string };
+}
 
 export type DecimalInputProps = {
   numberFormat?: NumberFormat;
@@ -13,12 +21,12 @@ export type DecimalInputProps = {
   maxDecimal?: number;
 } & (
   | {
-      onChange?: (event: { target: { name: string; value: string } }) => void;
+      onChange?: (event: StringEventType) => void;
       value?: string;
       asString?: true;
     }
   | {
-      onChange?: (event: { target: { name: string; value: number } }) => void;
+      onChange?: (event: NumberEventType) => void;
       value?: number;
       asString?: false;
     }
