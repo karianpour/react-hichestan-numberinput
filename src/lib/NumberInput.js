@@ -180,7 +180,9 @@ class NumberInput extends Component {
     let selectionStart = element.selectionStart;
     let selectionEnd = element.selectionEnd;
 
-    if(this.props.maxLength && valueToShow.length + enteredValue.length > this.props.maxLength){
+    let lengthToBe = valueToShow.length + enteredValue.length - (selectionEnd - selectionStart)
+
+    if(this.props.maxLength && lengthToBe > this.props.maxLength){
       return;
     }
 
