@@ -472,7 +472,7 @@ class CardNumberInput extends Component {
     if(nextProps.placeholder !== this.props.placeholder){
       this.inputRef.current.placeholder = nextProps.placeholder;
     }
-    return false;
+    return true;
   }
 
   render() {
